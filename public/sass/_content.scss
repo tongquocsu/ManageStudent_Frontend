@@ -1,0 +1,40 @@
+.content{
+    &-button{
+        color: black;
+        width: 50px;
+        min-height: 455px;
+    }
+    &-menu{
+        &-item{
+            position: relative;
+            top: -100px;
+            padding-bottom: 20px;
+
+        }
+    }
+}
+.offcanvas{
+--bs-offcanvas-width: 201px;
+}
+.offcanvas.offcanvas-start{
+    position: absolute;
+    top: 58px;
+    left: 40px;
+}
+.offcanvas-title{
+    font-family: 'Times New Roman', Times, serif;
+}
+.left{
+    &-menu{
+        &-item{
+            padding-bottom: 20px;
+        }
+        &-link{
+            padding-left: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            i{
+                padding-right: 10px;
+            }
+        }
+    }
+}

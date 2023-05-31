@@ -1,0 +1,44 @@
+@import "variable";
+.header {
+    padding: 5px 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #e2baba;
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-auth {
+      display: flex;
+      align-items: center;
+      gap: 0 30px;
+      text-transform: capitalize;
+      padding-right: 20px;
+    }
+    &-signin {
+      font-weight: 500;
+      color: $heading-color;
+    }
+    &-signup {
+      padding: 10px 30px;
+      border-radius: 100rem;
+      color: $primary-color;
+      border: 1px solid;
+      font-weight: 500;
+      
+    }
+    &-menu{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      &-item{
+        list-style: none;
+        padding-left: 40px;
+      }
+      &-link{
+          text-decoration: none;
+      }
+    }
+    
+  }
