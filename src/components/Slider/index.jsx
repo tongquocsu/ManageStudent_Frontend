@@ -7,14 +7,13 @@ function onChange() {
 
 function Slider() {
   const contentStyle = {
-    height: "90vh",
+    height: "80vh",
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
     margin: "0 auto",
     alignItems: "center",
     justifyContent: "center",
-    
   };
   const arrImages = [image, image, image];
   return (
@@ -24,7 +23,7 @@ function Slider() {
           <div key={index}>
             <div style={contentStyle}>
               <img
-                className="img-slider"
+                className="w-full flex flex-col mx-auto items-center justify-center"
                 src={image}
                 alt={`Slider ${index + 1}`}
               />
@@ -32,6 +31,10 @@ function Slider() {
           </div>
         ))}
       </Carousel>
+      <span className="text-[28px] font-[600]">“Học, học nữa, học mãi”</span>
+      <br></br>
+      <span className="text-[28px] font-[600]">- Lenin</span>
+
     </div>
   );
 }

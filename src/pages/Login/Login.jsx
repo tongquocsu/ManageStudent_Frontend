@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../../assets/css/login.css";
 import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
 function Login() {
@@ -28,21 +27,25 @@ function Login() {
     Navigate("/forgot-password");
   };
   return (
-    <div className="app-login-container">
-      <div className="container text-center">
-        <div className="flex justify-center">
+    <div className="flex flex-col justify-center items-center ">
+      <div className="container ">
+        <div className="flex">
           <div
             className={
-              showSlider ? "w-1/2 login-container" : " w-full login-container"
+              showSlider
+                ? "w-1/2 flex flex-col mx-auto items-center justify-center"
+                : " w-full flex flex-col mx-auto items-center justify-center"
             }
           >
-            <div className="title">Xin chào mừng đến với MyApp</div>
-            <div className="login-title my-2">Đăng nhập</div>
+            <div className="text-3xl font-bold">
+              Xin chào mừng đến với MyApp
+            </div>
+            <div className="text-[60px] font-[600] my-4">Đăng nhập</div>
             <input
               className={
                 showSlider
-                  ? "w-2/3 my-2 login-input"
-                  : "w-full my-2 login-input"
+                  ? "w-2/3 my-2 mx-auto rounded-md h-12 p-2 text-lg"
+                  : "w-full my-2 mx-auto rounded-md h-12 p-2 text-lg"
               }
               type="text"
               placeholder="Tài Khoản..."
@@ -53,8 +56,8 @@ function Login() {
             <input
               className={
                 showSlider
-                  ? "w-2/3 my-2 login-input"
-                  : "w-full my-2 login-input"
+                  ? "w-2/3 my-2 mx-auto rounded-md h-12 p-2 text-lg"
+                  : "w-full my-2 mx-auto rounded-md h-12 p-2 text-lg"
               }
               type="password"
               placeholder="Mật khẩu..."
@@ -65,13 +68,13 @@ function Login() {
             <div
               className={
                 showSlider
-                  ? "check-password w-2/3 my-4"
-                  : "check-password w-full my-4"
+                  ? "flex justify-between mx-auto w-2/3 my-4"
+                  : "flex justify-between mx-auto w-full my-4"
               }
             >
               <div className="checkbox-input">
                 <input type="checkbox" />
-                <span>Ghi nhớ tôi</span>
+                <span className="mx-1">Ghi nhớ tôi</span>
               </div>
               <div className="cursor-pointer hover:" onClick={handleNavigate}>
                 Quên mật khẩu?
@@ -79,7 +82,9 @@ function Login() {
             </div>
             <button
               className={
-                showSlider ? "button-input w-2/3" : "button-input w-full"
+                showSlider
+                  ? "mx-auto h-12 rounded-md text-white bg-black hover:opacity-80 w-2/3"
+                  : "mx-auto h-12 rounded-md text-white bg-black hover:opacity-80 w-full"
               }
               onClick={handleSubmit}
             >
