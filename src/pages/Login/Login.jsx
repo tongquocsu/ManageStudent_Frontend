@@ -1,13 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import "../assets/css/login.css";
-import Slider from "../components/Slider";
+import { useState, useEffect } from "react";
+import "../../assets/css/login.css";
+import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
-
-function ForgotPassword() {
-  const [forgotEmail, setForgotEmail] = useState("");
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showSlider, setShowSlider] = useState(true);
-  const emailInputRef = useRef(null);
-
   const handleSubmit = () => {
     // Xử lý việc gửi biểu mẫu
   };
@@ -27,11 +25,8 @@ function ForgotPassword() {
   }, []);
   const Navigate = useNavigate();
   const handleNavigate = () => {
-    Navigate("/login");
+    Navigate("/forgot-password");
   };
-  useEffect(() => {
-    emailInputRef.current.focus();
-  }, []);
   return (
     <div className="app-login-container">
       <div className="container text-center">
@@ -41,20 +36,30 @@ function ForgotPassword() {
               showSlider ? "w-1/2 login-container" : " w-full login-container"
             }
           >
-            <div className="title my-2">Xin chào mừng đến với MyApp</div>
-            <div className="login-title my-2">Quên mật khẩu</div>
-
+            <div className="title">Xin chào mừng đến với MyApp</div>
+            <div className="login-title my-2">Đăng nhập</div>
             <input
-              ref={emailInputRef}
               className={
                 showSlider
                   ? "w-2/3 my-2 login-input"
                   : "w-full my-2 login-input"
               }
               type="text"
-              placeholder="Nhập tài khoản đã đăng ký..."
-              value={forgotEmail}
-              onChange={(e) => setForgotEmail(e.target.value)}
+              placeholder="Tài Khoản..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              className={
+                showSlider
+                  ? "w-2/3 my-2 login-input"
+                  : "w-full my-2 login-input"
+              }
+              type="password"
+              placeholder="Mật khẩu..."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <div
@@ -64,11 +69,12 @@ function ForgotPassword() {
                   : "check-password w-full my-4"
               }
             >
-              <div
-                className="cursor-pointer flex-row-reverse ml-auto"
-                onClick={handleNavigate}
-              >
-                Hủy
+              <div className="checkbox-input">
+                <input type="checkbox" />
+                <span>Ghi nhớ tôi</span>
+              </div>
+              <div className="cursor-pointer hover:" onClick={handleNavigate}>
+                Quên mật khẩu?
               </div>
             </div>
             <button
@@ -77,7 +83,7 @@ function ForgotPassword() {
               }
               onClick={handleSubmit}
             >
-              Gửi mật khẩu mới
+              Đăng nhập
             </button>
           </div>
           {showSlider && (
@@ -91,4 +97,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default Login;
