@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
+import image from "../../assets/slider/slider.png";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showSlider, setShowSlider] = useState(true);
+  const arrImages = [image, image, image];
+  const Navigate = useNavigate();
+  
   const handleSubmit = () => {
-    // Xử lý việc gửi biểu mẫu
+    Navigate("/manager-classroom")
   };
 
   useEffect(() => {
@@ -22,7 +27,6 @@ function Login() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const Navigate = useNavigate();
   const handleNavigate = () => {
     Navigate("/forgot-password");
   };
@@ -93,7 +97,7 @@ function Login() {
           </div>
           {showSlider && (
             <div className="w-1/2 my-4">
-              <Slider />
+              <Slider arrImages= {arrImages} />
             </div>
           )}
         </div>

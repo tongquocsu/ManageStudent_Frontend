@@ -1,11 +1,11 @@
+import PropTypes from "prop-types";
 import { Carousel } from "antd";
-import image from "../../assets/slider/slider.png";
 
 function onChange() {
   // console.log("Slide changed:", currentSlide);
 }
 
-function Slider() {
+function Slider(props) {
   const contentStyle = {
     height: "80vh",
     textAlign: "center",
@@ -15,11 +15,11 @@ function Slider() {
     alignItems: "center",
     justifyContent: "center",
   };
-  const arrImages = [image, image, image];
+
   return (
     <div>
       <Carousel autoplay autoplaySpeed={3000} afterChange={onChange}>
-        {arrImages.map((image, index) => (
+        {props.arrImages.map((image, index) => (
           <div key={index}>
             <div style={contentStyle}>
               <img
@@ -32,11 +32,14 @@ function Slider() {
         ))}
       </Carousel>
       <span className="text-[28px] font-[600]">“Học, học nữa, học mãi”</span>
-      <br></br>
+      <br />
       <span className="text-[28px] font-[600]">- Lenin</span>
-
     </div>
   );
 }
+
+Slider.propTypes = {
+  arrImages: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Slider;
