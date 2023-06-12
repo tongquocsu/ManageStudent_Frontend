@@ -23,7 +23,7 @@ function Slider(props) {
           <div key={index}>
             <div style={contentStyle}>
               <img
-                className="w-full flex flex-col mx-auto items-center justify-center"
+                className=" flex flex-col items-center justify-center object-cover w-[80%]"
                 src={image}
                 alt={`Slider ${index + 1}`}
               />
@@ -31,9 +31,9 @@ function Slider(props) {
           </div>
         ))}
       </Carousel>
-      <span className="text-[28px] font-[600]">“Học, học nữa, học mãi”</span>
+      <span className="text-[28px] font-[600] flex justify-center">“Học, học nữa, học mãi”</span>
       <br />
-      <span className="text-[28px] font-[600]">- Lenin</span>
+      <span className="text-[28px] font-[600] flex justify-center">- Lenin</span>
     </div>
   );
 }
