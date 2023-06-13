@@ -37,11 +37,11 @@ const ManagerUser = () => {
   const data = [];
   for (let i = 0; i < 100; i++) {
     data.push({
-      key: i,
-      fullname: ` ${i}`,
-      email: `P ${i}`,
-      phone: `10 A ${i}`,
-      role: `P ${i}`,
+      // key: i,
+      fullname: `Nguyen Van ${i}`,
+      email: `test@gmail${i}.com`,
+      phone: `09999999${i}`,
+      role: "User",
     });
   }
 
