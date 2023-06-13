@@ -1,9 +1,9 @@
 import { NotificationOutlined, DownOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Dropdown, Space } from "antd";
-import { Button, NavDropdown, Form } from "react-bootstrap";
+// import { Button, NavDropdown, Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 
-import Nav from "react-bootstrap/Nav";
+// import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 
@@ -28,10 +28,13 @@ function Header() {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/" className="ml-[18px] mr-[180px]">
-          Logo
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <NavLink to="/admin">
+          <Navbar.Brand href="/" className="ml-[18px] mr-[180px]">
+            Logo
+          </Navbar.Brand>
+        </NavLink>
+
+        {/* <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0 flex gap-4 items-center"
@@ -65,8 +68,8 @@ function Header() {
             />
             <Button variant="outline-success">Search</Button>
           </Form>
-        </Navbar.Collapse>
-        <Space size={24}>
+        </Navbar.Collapse> */}
+        <Space size={24} className="absolute right-8">
           <Badge count={100} className="flex items-center justify-center">
             <Avatar shape="circle" icon={<NotificationOutlined />} />
           </Badge>
