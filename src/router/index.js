@@ -1,8 +1,9 @@
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
-import ManagerClassroom from "../pages/ManagerClassroom/ManagerClassroom";
+import ManageAcademic from "../pages/ManageAcademic/ManageAcademic";
 import NotPage from "../pages/NoPage/NoPage";
+
 const routes = [
   {
     path: "/login",
@@ -20,8 +21,8 @@ const routes = [
     isShowHeader: true,
   },
   {
-    path: "/manager-classroom",
-    page: ManagerClassroom,
+    path: "/manager-academic",
+    page: ManageAcademic,
     isShowHeader: true,
   },
   {
@@ -29,6 +30,5 @@ const routes = [
     page: NotPage,
     isShowHeader: false,
   },
-
 ];
 export default routes;
