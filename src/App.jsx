@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { Routes, Route } from "react-router-dom";
 import routes from "../src/router";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <div>

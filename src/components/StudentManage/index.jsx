@@ -6,7 +6,7 @@ import { Button, Form, Input } from "antd";
 import Loading from "../Loading";
 import _ from "lodash";
 import { toast } from "react-toastify";
-
+import { v4 as uuidv4 } from 'uuid';
 function StudentManage() {
   const [itemOption, setItemOption] = useState([]);
   const [isShowOption, setIsShownOption] = useState(false);
@@ -21,7 +21,9 @@ function StudentManage() {
   const [editRecord, setEditRecord] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [isModalEdit, setIsModalEdit] = useState(false);
-
+  const [isModalAdd, setIsModalAdd] = useState(false);
+  const [isModalDeleted, setIsModalDeleted] = useState(false);
+  const [deletingStudent, setDeletingStudent] = useState(null);
   const renderAction = (text, record) => {
     return (
       <div>
@@ -184,16 +186,36 @@ function StudentManage() {
     setEditRecord(record);
     setIsModalEdit(true);
   };
-  const handleCancelEdit = () => {
+  const handleCancel = () => {
+    setIsModalAdd(false);
     setIsModalEdit(false);
+    setIsModalDeleted(false);
   };
   const handleMenuClick = (e, title) => {
     e.stopPropagation();
     setSelectedClass(title);
     setIsShownOption(false);
   };
+  const generateUniqueId = () => {
+    return uuidv4();
+  };
+  const handleAddSubmit = () => {
+    const values = formInstance.getFieldsValue();
+    const newStudent = {
+      id: generateUniqueId(),
+      fullName: values.fullName,
+      Class: values.Class,
+      gender: values.gender,
+      dateOfBirth: values.dateOfBirth,
+      address: values.address,
+    };
+    setListUser([...listUser, newStudent]);
+    setIsModalAdd(false);
+    formInstance.resetFields();
+    toast.success("Tạo học sinh thành công!");
+  };
 
-  const handleSubmit = () => {
+  const handleEditSubmit = () => {
     const values = formInstance.getFieldsValue();
     const cloneListUser = _.cloneDeep(listUser);
     const index = cloneListUser.findIndex((item) => item.id === editRecord.id);
@@ -209,18 +231,21 @@ function StudentManage() {
       toast.success("Cập nhật thành công");
     }
   };
-  const handleDelete = (e) => {
-    console.log(e);
+  const handleDelete = (student) => {
+    setIsModalDeleted(true);
+    setDeletingStudent(student);
   };
-  console.log({
-    fullName,
-    Class,
-    gender,
-    dateOfBirth,
-    address,
-  });
+  const handleDeleteSubmit = () => {
+    if (deletingStudent) {
+      const updatedListUser = listUser.filter((s) => s.id !== deletingStudent.id);
+      setListUser(updatedListUser);
+      setIsModalDeleted(false);
+      setDeletingStudent(null);
+      toast.success("Xóa thành công!")
+    }
+  };
+
   const filteredData = listUser.filter((item) => item.Class === selectedClass);
-  console.log(listUser);
   return (
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
@@ -243,16 +268,21 @@ function StudentManage() {
             </ul>
           )}
         </div>
-        <Button className="bg-black text-white px-10">Tạo mới</Button>
+        <Button
+          className="bg-black text-white px-10"
+          onClick={() => setIsModalAdd(true)}
+        >
+          Tạo mới
+        </Button>
       </div>
 
       <Loading isLoading={!filteredData}>
         <TableComponent data={filteredData} columns={columns} />
       </Loading>
       <ModalComponent
-        title="Chỉnh sửa"
-        isOpen={isModalEdit}
-        onCancel={handleCancelEdit}
+        title="Thêm học sinh"
+        onCancel={handleCancel}
+        isOpen={isModalAdd}
         okButtonProps={{ style: { display: "none" } }}
       >
         <Form
@@ -340,11 +370,133 @@ function StudentManage() {
             />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
-            <Button className="bg-black cl text-white" onClick={handleSubmit}>
+            <Button
+              className="bg-black cl text-white"
+              onClick={handleAddSubmit}
+            >
+              Tạo mới
+            </Button>
+          </Form.Item>
+        </Form>
+      </ModalComponent>
+      <ModalComponent
+        title="Chỉnh sửa"
+        isOpen={isModalEdit}
+        onCancel={handleCancel}
+        okButtonProps={{ style: { display: "none" } }}
+      >
+        <Form
+          form={formInstance}
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={editRecord}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Họ và Tên"
+            name="fullName"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Input
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Lớp"
+            name="Class"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Input value={Class} onChange={(e) => setClass(e.target.value)} />
+          </Form.Item>
+          <Form.Item
+            label="Giới Tính"
+            name="gender"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Input value={gender} onChange={(e) => setGender(e.target.value)} />
+          </Form.Item>
+          <Form.Item
+            label="Ngày Sinh"
+            name="dateOfBirth"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Input
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Địa Chỉ"
+            name="address"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Input
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
+            <Button
+              className="bg-black cl text-white"
+              onClick={handleEditSubmit}
+            >
               Thay đổi
             </Button>
           </Form.Item>
         </Form>
+      </ModalComponent>
+      <ModalComponent
+        title="Xóa học sinh"
+        isOpen={isModalDeleted}
+        onCancel={handleCancel}
+        okButtonProps={{ style: { display: "none" } }}
+        footer={null}
+      >
+     
+      <span>Bạn có muốn chắc xóa học sinh này</span>
+  
+        <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
+          <Button
+            className="bg-black cl text-white"
+            onClick={()=>handleDeleteSubmit()}
+          >
+            Xóa
+          </Button>
+        </Form.Item>
       </ModalComponent>
     </div>
   );
