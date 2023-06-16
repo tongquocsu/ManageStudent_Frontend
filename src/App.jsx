@@ -1,17 +1,28 @@
 import "./App.css";
-import { DatePicker } from "antd";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
-import Content from "./components/Content";
-import Footer from "./components/Footer";
-
+import { Routes, Route } from "react-router-dom";
+import routes from "../src/routes/index.js";
 function App() {
   return (
-    <>
-      <Header />
-      <Content />
-      <Footer />
-      <DatePicker />
-    </>
+    <Routes>
+      {routes.map((route) => {
+        const Page = route.page;
+        const isShowHeader = route.isShowHeader;
+        return (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={
+              <>
+                {isShowHeader && <Header />}
+                <Page />
+              </>
+            }
+          />
+        );
+      })}
+    </Routes>
   );
 }
 
