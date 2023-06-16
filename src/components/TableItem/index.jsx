@@ -1,19 +1,10 @@
-import { Button, Table } from "antd";
+import { Table } from "antd";
 import { useState } from "react";
 
 function TableComponent(props) {
   // eslint-disable-next-line react/prop-types
-  const { data = [],  columns = [] } = props;
+  const { data = [], columns = [] } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const start = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
-  };
 
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
@@ -26,18 +17,9 @@ function TableComponent(props) {
   };
 
   const hasSelected = selectedRowKeys.length > 0;
-
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <Button
-          type="primary"
-          onClick={start}
-          disabled={!hasSelected}
-          loading={loading}
-        >
-          Reload
-        </Button>
         <span style={{ marginLeft: 8 }}>
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
         </span>
