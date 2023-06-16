@@ -53,50 +53,28 @@ const Sidebar = () => {
     }
   };
   const handleMenuClick = (key) => {
-    // Xử lý chuyển hướng tới menu tương ứng
-    switch (key) {
-      case "sub1":
-        navigate("/manager-user");
-        break;
-      // teacher routes
-      case "5":
-        navigate("/teacher/home");
-        break;
-      case "6":
-        navigate("/teacher/account-info");
-        break;
-      case "7":
-        navigate("/teacher/class-list");
-        break;
-      case "8":
-        navigate("/teacher/view-schedule");
-        break;
-      case "9":
-        navigate("/teacher/parent-meeting");
-        break;
-      // accountant routes
-      case "10":
-        navigate("/accountant/statistic");
-        break;
-      case "11":
-        navigate("/accountant/payment");
-        break;
-      case "12":
-        navigate("/accountant/recipient");
-        break;
-      case "13":
-        navigate("/accountant/report");
-        break;
+    // Define route paths
+    const routes = {
+      sub1: "/admin/manager-user",
+      sub5: "/settings",
+      sub6: "/sign-up",
+      5: "/admin/teacher/home",
+      6: "/admin/teacher/account-info",
+      7: "/admin/teacher/class-list",
+      8: "/admin/teacher/view-schedule",
+      9: "/admin/teacher/parent-meeting",
+      10: "/admin/accountant/statistic",
+      11: "/admin/accountant/payment",
+      12: "/admin/accountant/recipient",
+      13: "/admin/accountant/report",
+    };
 
-      case "sub5":
-        navigate("/manager-user");
-        break;
-      case "sub6":
-        navigate("/manager-user");
-        break;
-      // Thêm các trường hợp khác tương ứng với menu của bạn
-      default:
-        break;
+    // Get the corresponding route path based on the key
+    const route = routes[key];
+
+    // Navigate to the route if it exists
+    if (route) {
+      navigate(route);
     }
   };
 
