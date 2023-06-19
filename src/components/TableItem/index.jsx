@@ -42,6 +42,7 @@ function TableItem(props) {
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
         </span>
       </div>
+
       <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
     </div>
   );
