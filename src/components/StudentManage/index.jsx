@@ -6,11 +6,11 @@ import { Button, Form, Input } from "antd";
 import Loading from "../Loading";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 function StudentManage() {
   const [itemOption, setItemOption] = useState([]);
   const [isShowOption, setIsShownOption] = useState(false);
-  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedClass, setSelectedClass] = useState("10A1");
   const [listUser, setListUser] = useState([]);
   const formInstance = Form.useForm()[0];
   const [fullName, setFullName] = useState("");
@@ -18,13 +18,14 @@ function StudentManage() {
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [address, setAddress] = useState("");
-  const [editRecord, setEditRecord] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [edituser, setEdituser] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalAdd, setIsModalAdd] = useState(false);
   const [isModalDeleted, setIsModalDeleted] = useState(false);
   const [deletingStudent, setDeletingStudent] = useState(null);
-  const renderAction = (text, record) => {
+  const renderAction = (text, user) => {
     return (
       <div>
         <EditOutlined
@@ -37,7 +38,7 @@ function StudentManage() {
             borderRadius: "5px",
             padding: "4px",
           }}
-          onClick={() => handleEdit(record)}
+          onClick={() => handleEdit(user)}
         />
         <DeleteOutlined
           style={{
@@ -48,19 +49,23 @@ function StudentManage() {
             borderRadius: "5px",
             padding: "4px",
           }}
-          onClick={() => handleDelete(record)}
+          onClick={() => handleDelete(user)}
         />
       </div>
     );
   };
+
   const columns = [
+    { title: "ID", dataIndex: "id" },
     {
       title: "STT",
-      dataIndex: "id",
+      dataIndex: "sst",
+      sorter: (a, b) => a.sst - b.sst,
     },
     {
       title: "Họ Và Tên",
       dataIndex: "fullName",
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
     },
     {
       title: "Lớp",
@@ -84,94 +89,28 @@ function StudentManage() {
       render: renderAction,
     },
   ];
-  const data = [
-    {
-      id: "1",
-      fullName: "Nguyễn Văn 1",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "1 / 1 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "2",
-      fullName: "Nguyễn Văn 2",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "2 / 2 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "3",
-      fullName: "Nguyễn Văn 3",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "3 / 3 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "4",
-      fullName: "Nguyễn Văn 4",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "4 / 4 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "5",
-      fullName: "Nguyễn Văn 5",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "5 / 5 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "6",
-      fullName: "Nguyễn Văn 6",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "6 / 6 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "7",
-      fullName: "Nguyễn Văn 7",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "7 / 7 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "8",
-      fullName: "Nguyễn Văn 8",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "8 / 8 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "9",
-      fullName: "Nguyễn Văn 9",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "9 / 9 / 2001",
-      address: "Cần Thơ",
-    },
-    {
-      id: "10",
-      fullName: "Nguyễn Văn 10",
-      Class: "10A3",
-      gender: "Male",
-      dateOfBirth: "10 / 10 / 2001",
-      address: "Cần Thơ",
-    },
-  ];
+  const data = [];
+  for (let i = 0; i < 10; i++) {
+    for (let j = 1; j < 7; j++) {
+      data.push({
+        key: `${i}`,
+        id: `${i}`,
+        sst: `${i}`,
+        fullName: `Nguyễn Văn ${i + 1}`,
+        Class: `10A${j}`,
+        gender: "Male",
+        dateOfBirth: `${i + 1} / ${i + 1} / 2001`,
+        address: "Cần Thơ",
+      });
+    }
+  }
 
-  const menuItems = [
-    { key: "option1", title: "10A1" },
-    { key: "option2", title: "10A2" },
-    { key: "option3", title: "10A3" },
-  ];
+  const uniqueClasses = [...new Set(data.map((item) => item.Class))];
+
+  const menuItems = uniqueClasses.map((classItem, index) => ({
+    key: `option${index + 1}`,
+    title: classItem,
+  }));
 
   useEffect(() => {
     setItemOption(menuItems);
@@ -182,8 +121,9 @@ function StudentManage() {
   const handletoggle = () => {
     setIsShownOption(!isShowOption);
   };
-  const handleEdit = (record) => {
-    setEditRecord(record);
+  const handleEdit = (user) => {
+    console.log(user);
+    setEdituser(user);
     setIsModalEdit(true);
   };
   const handleCancel = () => {
@@ -199,10 +139,13 @@ function StudentManage() {
   const generateUniqueId = () => {
     return uuidv4();
   };
+
   const handleAddSubmit = () => {
+    let sstItem = listUser.length;
     const values = formInstance.getFieldsValue();
     const newStudent = {
       id: generateUniqueId(),
+      sst: sstItem + 1,
       fullName: values.fullName,
       Class: values.Class,
       gender: values.gender,
@@ -211,14 +154,16 @@ function StudentManage() {
     };
     setListUser([...listUser, newStudent]);
     setIsModalAdd(false);
+    setIsLoading(true);
     formInstance.resetFields();
     toast.success("Tạo học sinh thành công!");
+    setIsLoading(false);
   };
 
   const handleEditSubmit = () => {
     const values = formInstance.getFieldsValue();
     const cloneListUser = _.cloneDeep(listUser);
-    const index = cloneListUser.findIndex((item) => item.id === editRecord.id);
+    const index = cloneListUser.findIndex((item) => item.id === edituser.id);
 
     if (index !== -1) {
       cloneListUser[index].fullName = values.fullName;
@@ -227,8 +172,11 @@ function StudentManage() {
       cloneListUser[index].dateOfBirth = values.dateOfBirth;
       cloneListUser[index].address = values.address;
       setListUser(cloneListUser);
+      setIsLoading(true);
       setIsModalEdit(false);
       toast.success("Cập nhật thành công");
+      setIsLoading(false);
+      formInstance.resetFields();
     }
   };
   const handleDelete = (student) => {
@@ -237,11 +185,15 @@ function StudentManage() {
   };
   const handleDeleteSubmit = () => {
     if (deletingStudent) {
-      const updatedListUser = listUser.filter((s) => s.id !== deletingStudent.id);
+      const updatedListUser = listUser.filter(
+        (s) => s.id !== deletingStudent.id
+      );
       setListUser(updatedListUser);
+      setIsLoading(true);
       setIsModalDeleted(false);
       setDeletingStudent(null);
-      toast.success("Xóa thành công!")
+      toast.success("Xóa thành công!");
+      setIsLoading(false);
     }
   };
 
@@ -276,7 +228,7 @@ function StudentManage() {
         </Button>
       </div>
 
-      <Loading isLoading={!filteredData}>
+      <Loading isLoading={isLoading}>
         <TableComponent data={filteredData} columns={columns} />
       </Loading>
       <ModalComponent
@@ -297,7 +249,7 @@ function StudentManage() {
           style={{
             maxWidth: 600,
           }}
-          initialValues={editRecord}
+          initialValues={edituser}
           autoComplete="off"
         >
           <Form.Item
@@ -397,7 +349,7 @@ function StudentManage() {
           style={{
             maxWidth: 600,
           }}
-          initialValues={editRecord}
+          initialValues={edituser}
           autoComplete="off"
         >
           <Form.Item
@@ -486,13 +438,12 @@ function StudentManage() {
         okButtonProps={{ style: { display: "none" } }}
         footer={null}
       >
-     
-      <span>Bạn có muốn chắc xóa học sinh này</span>
-  
+        <span>Bạn có muốn chắc xóa học sinh này</span>
+
         <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
           <Button
             className="bg-black cl text-white"
-            onClick={()=>handleDeleteSubmit()}
+            onClick={() => handleDeleteSubmit()}
           >
             Xóa
           </Button>
