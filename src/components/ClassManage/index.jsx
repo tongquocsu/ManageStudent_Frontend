@@ -92,7 +92,7 @@ for (let i = 0; i < 10; i++) {
       key: `${i}+${j}`,
       id: `${i}`,
       room: room,
-      Class: `10A${j}`,
+      Class: `${j}A${i+1}`,
       grade: `${j}`,
     });
   }
@@ -128,9 +128,9 @@ for (let i = 0; i < 10; i++) {
   const generateUniqueId = () => {
     return uuidv4();
   };
-  const handleAddClass = (user) => {
-    console.log(user);
-    setAddClass(user);
+  const handleAddClass = (Class) => {
+    console.log(Class);
+    setAddClass(Class);
     setIsModalAdd(true);
   };
 
@@ -153,16 +153,14 @@ for (let i = 0; i < 10; i++) {
   };
   const handleEditSubmit = () => {
     const values = formInstance.getFieldsValue();
-    const cloneListUser = _.cloneDeep(listItemClass);
-    const index = cloneListUser.findIndex((item) => item.id === editClass.id);
+    const cloneListClass = _.cloneDeep(listItemClass);
+    const index = cloneListClass.findIndex((item) => item.id === editClass.id);
 
     if (index !== -1) {
-      cloneListUser[index].fullName = values.fullName;
-      cloneListUser[index].Class = values.Class;
-      cloneListUser[index].gender = values.gender;
-      cloneListUser[index].dateOfBirth = values.dateOfBirth;
-      cloneListUser[index].address = values.address;
-      setListItemClass(cloneListUser);
+      cloneListClass[index].room = values.room;
+      cloneListClass[index].Class = values.Class;
+      cloneListClass[index].grade = values.grade;
+      setListItemClass(cloneListClass);
       setIsLoading(true);
       setIsModalEdit(false);
       toast.success("Cập nhật thành công");
@@ -181,10 +179,10 @@ for (let i = 0; i < 10; i++) {
   };
   const handleDeleteSubmit = () => {
     if (deleteClass) {
-      const updatedListUser = listItemClass.filter(
+      const updatedListClass = listItemClass.filter(
         (s) => s.id !== deleteClass.id
       );
-      setListItemClass(updatedListUser);
+      setListItemClass(updatedListClass);
       setIsLoading(true);
       setIsModalDeleted(false);
       setDeleteClass(null);
