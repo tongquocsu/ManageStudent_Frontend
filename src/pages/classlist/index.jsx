@@ -4,6 +4,7 @@ import {Link } from 'react-router-dom'
 // constructor(props) {
 //   super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
 //   this.state = { //state is by default an object
+
 //      students: [
 //         { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
 //         { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },

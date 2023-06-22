@@ -6,7 +6,7 @@ import teachSchedule from '../pages/teachSchedule'
 import managerClass from '../pages/managerClass'
 import sendLetter from '../pages/sendLetter'
 import inputScore from '../pages/inputScore'
-import classlist from '../pages/classlist'
+import classList from '../pages/classList'
 import myProfile from '../pages/myProfile'
 import Home from '../pages/Home'
 
@@ -18,7 +18,7 @@ const publicRoutes = [
     {path: '/teacher/xemlichday',  component: teachSchedule },
     {path: '/teacher/managerClass', component: managerClass},
     {path: '/teacher/sendLetter', component: sendLetter},
-    {path: '/teacher/classlist', component: classlist},
+    {path: '/teacher/classlist', component: classList},
     {path: '/teacher/inputScore', component: inputScore},
     {path: '/teacher/profile', component: myProfile},
     {path: '/',  component: Home},
