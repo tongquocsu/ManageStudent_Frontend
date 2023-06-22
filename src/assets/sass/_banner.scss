@@ -1,0 +1,78 @@
+.banner{
+   overflow: hidden;
+    &-title{
+        margin-top: 70px;
+        margin-left: 20px;
+    }
+    &-text{
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+        margin-bottom: 20px;
+    }
+   
+   
+}
+.image{
+    height: 340px;
+}
+//---------------------infomation-------------------
+.info{
+    &-list{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 0px 10px ;
+        margin: 30px 0px;
+    }
+    &-items{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 30px 40px;
+        border: 1px solid #c8bebe;
+        border-radius: 10px;
+    }
+    
+    &-title{
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 5px;
+        color: black;
+    }
+    &-desc{
+        margin-bottom: 20px;
+    }
+    &-result{
+        color: #515ddd;
+        font-size: 28px;
+        font-weight: 800;
+        margin-right: 40px;
+    }
+    &-detail{
+        position: relative;
+        top: -17px;
+        padding-left: 80px;
+        margin-bottom: 10px;
+    }
+    &-detaildiff{
+        position: relative;
+        top: -17px;
+        padding-left: 50px;
+        margin-bottom: 10px;
+    }
+    &-special{
+        margin-bottom: 30px;
+        i {
+            padding-right: 15px;
+        }
+    }
+    &-item{
+        padding: 5px 0px;
+        
+    }
+}
+.btn{
+    &-border{
+        margin-top: auto;
+    }
+}

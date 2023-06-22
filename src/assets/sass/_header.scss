@@ -1,0 +1,25 @@
+@import "variable";
+.header {
+    padding: 5px 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: #ebe9e9;
+    border-radius: 10px;
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    
+    &-menu{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      &-item{
+        list-style: none;
+        padding-left: 50px;
+      }
+    }
+    
+  }

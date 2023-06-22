@@ -70,8 +70,33 @@ body {
     margin-right: auto;
     text-align: center;
   }
+  .info-green{
+    i{
+      color: #39DC98;
+    }
+  }
+  .info-red{
+    i{
+       color: #FD809E;
+    }
+   
+  }
   @media screen and (max-width: 767px) {
     .button {
       padding: 13px 26px;
     }
   }
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin: 16px 0;
+  
+  justify-content: center;
+}
+
+
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th
+{
+  background-color: #515ddd;
+  color: white;
+}

@@ -9,7 +9,6 @@
             position: relative;
             top: -100px;
             padding-bottom: 20px;
-
         }
     }
 }
@@ -18,8 +17,8 @@
 }
 .offcanvas.offcanvas-start{
     position: absolute;
-    top: 58px;
-    left: 40px;
+    top: 67px;
+    left: 50px;
 }
 .offcanvas-title{
     font-family: 'Times New Roman', Times, serif;
@@ -27,7 +26,7 @@
 .left{
     &-menu{
         &-item{
-            
+            padding-bottom: 20px;
         }
         &-link{
             padding-left: 20px;
