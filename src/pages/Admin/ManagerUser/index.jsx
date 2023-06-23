@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Form, Input } from "antd";
+import { Form, Input, Select } from "antd";
+const { Option } = Select;
 
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Sidebar from "../../../components/Sidebar";
@@ -8,12 +9,29 @@ import TableItem from "../../../components/TableItem";
 import ModalItem from "../../../components/ModalItem";
 
 const ManagerUser = () => {
+  const [data, setData] = useState([]);
   const [editRecord, setEditRecord] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formValues, setFormValues] = useState({ user: { ...selectedUser } });
   const formRef = useRef(null);
 
   const [isModalEdit, setIsModalEdit] = useState(false);
+  useEffect(() => {
+    // Initialize the data array
+    const initialData = [];
+    for (let i = 0; i < 100; i++) {
+      const id = uuidv4(); // Generate a UUID as a random ID
+      initialData.push({
+        key: id,
+        fullname: `Nguyen Van ${i}`,
+        email: `test@gmail${i}.com`,
+        phone: `09999999${i}`,
+        role: "User",
+      });
+    }
+    setData(initialData);
+  }, []);
+
   useEffect(() => {
     // Update the form values when the selectedUser changes
     if (selectedUser) {
@@ -80,7 +98,6 @@ const ManagerUser = () => {
   /* eslint-enable no-template-curly-in-string */
 
   const onFinish = (values) => {
-    // Update the selected user in the data array
     const updatedData = data.map((user) => {
       if (user.key === selectedUser.key) {
         return { ...user, ...values.user };
@@ -88,31 +105,11 @@ const ManagerUser = () => {
       return user;
     });
 
-    // Update the data array directly
-    data.splice(
-      data.findIndex((user) => user.key === selectedUser.key),
-      1,
-      ...updatedData
-    );
-
-    // Close the modal
+    setData(updatedData);
     setIsModalEdit(false);
-
-    // Reset the form fields
     formRef.current.resetFields();
   };
 
-  const data = [];
-  for (let i = 0; i < 100; i++) {
-    const id = uuidv4(); // Generate a UUID as a random ID
-    data.push({
-      key: id,
-      fullname: `Nguyen Van ${i}`,
-      email: `test@gmail${i}.com`,
-      phone: `09999999${i}`,
-      role: "User",
-    });
-  }
   // handle CRUD
 
   const handleEdit = (record) => {
@@ -122,7 +119,9 @@ const ManagerUser = () => {
     setFormValues({ user: { ...record } });
     console.log("user: ", record);
   };
-
+  const handleOk = () => {
+    formRef.current.submit();
+  };
   const handleCancel = () => {
     setIsModalEdit(false);
   };
@@ -140,6 +139,7 @@ const ManagerUser = () => {
           isOpen={isModalEdit}
           onCancel={handleCancel}
           editRecord={editRecord}
+          onOk={handleOk}
           setEditRecord={setEditRecord}
         >
           <Form
@@ -216,9 +216,8 @@ const ManagerUser = () => {
                 },
               ]}
             >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
+              <Select
+                onChange={(value) => {
                   setFormValues((prevValues) => ({
                     ...prevValues,
                     user: {
@@ -227,7 +226,13 @@ const ManagerUser = () => {
                     },
                   }));
                 }}
-              />
+              >
+                <Option value="User">User</Option>
+                <Option value="Admin">Admin</Option>
+                <Option value="Giáo viên">Giáo viên</Option>
+                <Option value="Kế toán">Kế toán</Option>
+                <Option value="Quản lý học vụ">Quản lý học vụ</Option>
+              </Select>
             </Form.Item>
           </Form>
         </ModalItem>
