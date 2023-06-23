@@ -7,6 +7,7 @@ import Loading from "../Loading";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import SearchInput from "../SearchInput";
 function StudentManage() {
   const [itemOption, setItemOption] = useState([]);
   const [isShowOption, setIsShownOption] = useState(false);
@@ -20,11 +21,15 @@ function StudentManage() {
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [edituser, setEdituser] = useState(null);
+  const [adduser, setAdduser] = useState(null);
+
   // eslint-disable-next-line no-unused-vars
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalAdd, setIsModalAdd] = useState(false);
   const [isModalDeleted, setIsModalDeleted] = useState(false);
-  const [deletingStudent, setDeletingStudent] = useState(null);
+  const [deleteStudent, setDeleteStudent] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [listUserSearch, setListUserSearch] = useState([]);
   const renderAction = (text, user) => {
     return (
       <div>
@@ -126,6 +131,11 @@ function StudentManage() {
     setEdituser(user);
     setIsModalEdit(true);
   };
+  const handleAddUser = (user) => {
+    console.log(user);
+    setAdduser(user);
+    setIsModalAdd(true);
+  };
   const handleCancel = () => {
     setIsModalAdd(false);
     setIsModalEdit(false);
@@ -141,7 +151,7 @@ function StudentManage() {
   };
 
   const handleAddSubmit = () => {
-    let sstItem = listUser.length;
+    let sstItem = filteredData.length;
     const values = formInstance.getFieldsValue();
     const newStudent = {
       id: generateUniqueId(),
@@ -181,23 +191,32 @@ function StudentManage() {
   };
   const handleDelete = (student) => {
     setIsModalDeleted(true);
-    setDeletingStudent(student);
+    setDeleteStudent(student);
   };
   const handleDeleteSubmit = () => {
-    if (deletingStudent) {
-      const updatedListUser = listUser.filter(
-        (s) => s.id !== deletingStudent.id
-      );
+    if (deleteStudent) {
+      const updatedListUser = listUser.filter((s) => s.id !== deleteStudent.id);
       setListUser(updatedListUser);
       setIsLoading(true);
       setIsModalDeleted(false);
-      setDeletingStudent(null);
+      setDeleteStudent(null);
       toast.success("Xóa thành công!");
       setIsLoading(false);
     }
   };
 
   const filteredData = listUser.filter((item) => item.Class === selectedClass);
+  const handleSearch = (value) => {
+    setSearchValue(value);
+  };
+  useEffect(() => {
+    const filterSearch = filteredData.filter((item) => {
+      const classText = item.fullName.toLowerCase();
+      const searchValueText = searchValue.toLowerCase();
+      return classText.includes(searchValueText);
+    });
+    setListUserSearch(filterSearch);
+  }, [searchValue]);
   return (
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
@@ -220,16 +239,18 @@ function StudentManage() {
             </ul>
           )}
         </div>
-        <Button
-          className="bg-black text-white px-10"
-          onClick={() => setIsModalAdd(true)}
-        >
+        <SearchInput placeholder="Tìm kiếm theo tên" onSearch={handleSearch} />
+        <Button className="bg-black text-white px-10" onClick={handleAddUser}>
           Tạo mới
         </Button>
       </div>
 
       <Loading isLoading={isLoading}>
-        <TableComponent data={filteredData} columns={columns} />
+        {searchValue ? (
+          <TableComponent data={listUserSearch} columns={columns} />
+        ) : (
+          <TableComponent data={filteredData} columns={columns} />
+        )}
       </Loading>
       <ModalComponent
         title="Thêm học sinh"
@@ -249,7 +270,7 @@ function StudentManage() {
           style={{
             maxWidth: 600,
           }}
-          initialValues={edituser}
+          initialValues={adduser}
           autoComplete="off"
         >
           <Form.Item

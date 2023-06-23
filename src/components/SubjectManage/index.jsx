@@ -1,32 +1,31 @@
 import { DeleteOutlined, EditOutlined, DownOutlined } from "@ant-design/icons";
 import TableComponent from "../TableItem";
-import { Button, Form, Input } from "antd";
-import { useEffect, useState } from "react";
 import ModalComponent from "../ModalComponent";
-import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { Button, Form, Input } from "antd";
 import Loading from "../Loading";
 import _ from "lodash";
+import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 import SearchInput from "../SearchInput";
-function ClassManage() {
-  const [listItemClass, setListItemClass] = useState([]);
+function SubjectManage() {
+  const [listItemSubject, setListItemSubject] = useState([]);
   const [itemOption, setItemOption] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("10");
+  const [selectedSubject, setSelectedSubject] = useState("10");
   const [isShowOption, setIsShownOption] = useState(false);
-  const [Class, setClass] = useState("");
-  const [room, setRoom] = useState("");
+  const [Subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
-  const [editClass, setEditClass] = useState(null);
+  const [editSubject, setEditSubject] = useState(null);
   const formInstance = Form.useForm()[0];
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalAdd, setIsModalAdd] = useState(false);
   const [isModalDeleted, setIsModalDeleted] = useState(false);
-  const [addClass, setAddClass] = useState(null);
+  const [addSubject, setAddSubject] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [deleteClass, setDeleteClass] = useState(null);
+  const [deleteSubject, setDeleteSubject] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const renderAction = (text, classItem) => {
+  const [listSearchClass, setListSearchClass] = useState([])
+  const renderAction = (text, SubjectItem) => {
     return (
       <div>
         <EditOutlined
@@ -39,7 +38,7 @@ function ClassManage() {
             borderRadius: "5px",
             padding: "4px",
           }}
-          onClick={() => handleEdit(classItem)}
+          onClick={() => handleEdit(SubjectItem)}
         />
         <DeleteOutlined
           style={{
@@ -50,7 +49,7 @@ function ClassManage() {
             borderRadius: "5px",
             padding: "4px",
           }}
-          onClick={() => handleDelete(classItem)}
+          onClick={() => handleDelete(SubjectItem)}
         />
       </div>
     );
@@ -61,14 +60,9 @@ function ClassManage() {
       dataIndex: "id",
     },
     {
-      title: "Phòng ",
-      dataIndex: "room",
-      sorter: (a, b) => a.room.localeCompare(b.room),
-    },
-    {
-      title: "Lớp",
-      dataIndex: "Class",
-      sorter: (a, b) => a.Class.localeCompare(b.Class),
+      title: "Môn học",
+      dataIndex: "Subject",
+      sorter: (a, b) => a.Subject.localeCompare(b.Subject),
     },
     { title: "Khối", dataIndex: "grade" },
     {
@@ -79,40 +73,31 @@ function ClassManage() {
   ];
 
   const data = [];
-  const usedRooms = [];
+  const subjects = ["Toán", "Lý", "Hóa"];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < subjects.length; i++) {
     for (let j = 10; j < 13; j++) {
-      let room = "";
-      for (let k = 0; k < i + 1; k++) {
-        if (!usedRooms.includes(`P${k}`)) {
-          room = `P${k}`;
-          usedRooms.push(room);
-          break;
-        }
-      }
       data.push({
         key: `${i}+${j}`,
         id: `${i}`,
-        room: room,
-        Class: `${j}A${i + 1}`,
+        Subject: `${subjects[i]}`,
         grade: `${j}`,
       });
     }
   }
 
-  const uniqueClasses = [...new Set(data.map((item) => item.grade))];
+  const uniqueSubjectes = [...new Set(data.map((item) => item.grade))];
 
-  const menuItems = uniqueClasses.map((classItem, index) => ({
+  const menuItems = uniqueSubjectes.map((SubjectItem, index) => ({
     key: `option${index + 1}`,
-    title: classItem,
+    title: SubjectItem,
   }));
 
   useEffect(() => {
     setItemOption(menuItems);
   }, []);
   useEffect(() => {
-    setListItemClass(data);
+    setListItemSubject(data);
   }, []);
   const handletoggle = () => {
     setIsShownOption(!isShowOption);
@@ -125,15 +110,15 @@ function ClassManage() {
   };
   const handleMenuClick = (e, title) => {
     e.stopPropagation();
-    setSelectedClass(title);
+    setSelectedSubject(title);
     setIsShownOption(false);
   };
   const generateUniqueId = () => {
     return uuidv4();
   };
-  const handleAddClass = (Class) => {
-    console.log(Class);
-    setAddClass(Class);
+  const handleAddSubject = (Subject) => {
+    console.log(Subject);
+    setAddSubject(Subject);
     setIsModalAdd(true);
   };
 
@@ -144,10 +129,10 @@ function ClassManage() {
       id: generateUniqueId(),
       sst: sstItem + 1,
       room: values.room,
-      Class: values.Class,
+      Subject: values.Subject,
       grade: values.grade,
     };
-    setListItemClass([...listItemClass, newStudent]);
+    setListItemSubject([...listItemSubject, newStudent]);
     setIsModalAdd(false);
     setIsLoading(true);
     formInstance.resetFields();
@@ -156,14 +141,15 @@ function ClassManage() {
   };
   const handleEditSubmit = () => {
     const values = formInstance.getFieldsValue();
-    const cloneListClass = _.cloneDeep(listItemClass);
-    const index = cloneListClass.findIndex((item) => item.id === editClass.id);
+    const cloneListSubject = _.cloneDeep(listItemSubject);
+    const index = cloneListSubject.findIndex(
+      (item) => item.id === editSubject.id
+    );
 
     if (index !== -1) {
-      cloneListClass[index].room = values.room;
-      cloneListClass[index].Class = values.Class;
-      cloneListClass[index].grade = values.grade;
-      setListItemClass(cloneListClass);
+      cloneListSubject[index].Subject = values.Subject;
+      cloneListSubject[index].grade = values.grade;
+      setListItemSubject(cloneListSubject);
       setIsLoading(true);
       setIsModalEdit(false);
       toast.success("Cập nhật thành công");
@@ -171,48 +157,49 @@ function ClassManage() {
       formInstance.resetFields();
     }
   };
-  const handleEdit = (classItem) => {
-    console.log(classItem);
-    setEditClass(classItem);
+  const handleEdit = (SubjectItem) => {
+    console.log(SubjectItem);
+    setEditSubject(SubjectItem);
     setIsModalEdit(true);
   };
-  const handleDelete = (classItem) => {
+  const handleDelete = (SubjectItem) => {
     setIsModalDeleted(true);
-    setDeleteClass(classItem);
+    setDeleteSubject(SubjectItem);
   };
   const handleDeleteSubmit = () => {
-    if (deleteClass) {
-      const updatedListClass = listItemClass.filter(
-        (s) => s.id !== deleteClass.id
+    if (deleteSubject) {
+      const updatedListSubject = listItemSubject.filter(
+        (s) => s.id !== deleteSubject.id
       );
-      setListItemClass(updatedListClass);
+      setListItemSubject(updatedListSubject);
       setIsLoading(true);
       setIsModalDeleted(false);
-      setDeleteClass(null);
+      setDeleteSubject(null);
       toast.success("Xóa thành công!");
       setIsLoading(false);
     }
   };
 
-  const filteredData = listItemClass.filter(
-    (item) => item.grade === selectedClass
+  const filteredData = listItemSubject.filter(
+    (item) => item.grade === selectedSubject
   );
   const handleSearch = (value) => {
     setSearchValue(value);
   };
-  useEffect(() => {
-    const filterSearch = filteredData.filter((item) => {
-      const classText = item.Class.toLowerCase();
+  useEffect(()=>{
+    const filterSearch = filteredData.filter((item)=>{
+      console.log(item)
+      const classText = item.Subject.toLowerCase();
       const searchValueText = searchValue.toLowerCase();
-      return classText.includes(searchValueText);
-    });
-    setSearchResults(filterSearch);
-  }, [searchValue]);
+      return classText.includes(searchValueText)
+    })
+    setListSearchClass(filterSearch)
+  },[searchValue])
   return (
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
         <div className="relative">
-          Khối: {selectedClass} <DownOutlined onClick={handletoggle} />
+          Khối: {selectedSubject} <DownOutlined onClick={handletoggle} />
           {isShowOption && (
             <ul
               className="absolute z-10 bg-white text-center rounded-sm w-[100px] shadow min-h-[120px] overflow-y-auto"
@@ -230,23 +217,23 @@ function ClassManage() {
             </ul>
           )}
         </div>
-        <SearchInput
-          placeholder="Tìm kiếm theo lớp..."
-          onSearch={handleSearch}
-        />
-        <Button className="bg-black text-white px-10" onClick={handleAddClass}>
+        <SearchInput placeholder="Tìm kiếm theo môn học" onSearch={handleSearch} />
+        <Button
+          className="bg-black text-white px-10"
+          onClick={handleAddSubject}
+        >
           Tạo mới
         </Button>
       </div>
       <Loading isLoading={isLoading}>
-        {searchValue ? (
-          <TableComponent data={searchResults} columns={columns} />
-        ) : (
-          <TableComponent data={filteredData} columns={columns} />
-        )}
-      </Loading>
+      {searchValue ? (
+        <TableComponent data={listSearchClass} columns={columns} />
+      ) : (
+        <TableComponent data={filteredData} columns={columns} />
+      )}
+    </Loading>
       <ModalComponent
-        title="Thêm lớp"
+        title="Thêm môn học"
         onCancel={handleCancel}
         isOpen={isModalAdd}
         okButtonProps={{ style: { display: "none" } }}
@@ -263,12 +250,12 @@ function ClassManage() {
           style={{
             maxWidth: 600,
           }}
-          initialValues={addClass}
+          initialValues={addSubject}
           autoComplete="off"
         >
           <Form.Item
-            label="Phòng"
-            name="room"
+            label="Môn học"
+            name="Subject"
             rules={[
               {
                 required: true,
@@ -276,19 +263,10 @@ function ClassManage() {
               },
             ]}
           >
-            <Input value={room} onChange={(e) => setRoom(e.target.value)} />
-          </Form.Item>
-          <Form.Item
-            label="Lớp"
-            name="Class"
-            rules={[
-              {
-                required: true,
-                message: "Không được để trống!",
-              },
-            ]}
-          >
-            <Input value={Class} onChange={(e) => setClass(e.target.value)} />
+            <Input
+              value={Subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
           </Form.Item>
           <Form.Item
             label="Khối"
@@ -313,7 +291,7 @@ function ClassManage() {
         </Form>
       </ModalComponent>
       <ModalComponent
-        title="Thay đổi lớp học"
+        title="Thay đổi môn học"
         onCancel={handleCancel}
         isOpen={isModalEdit}
         okButtonProps={{ style: { display: "none" } }}
@@ -330,12 +308,12 @@ function ClassManage() {
           style={{
             maxWidth: 600,
           }}
-          initialValues={editClass}
+          initialValues={editSubject}
           autoComplete="off"
         >
           <Form.Item
-            label="Phòng"
-            name="room"
+            label="Môn học"
+            name="Subject"
             rules={[
               {
                 required: true,
@@ -343,19 +321,10 @@ function ClassManage() {
               },
             ]}
           >
-            <Input value={room} onChange={(e) => setRoom(e.target.value)} />
-          </Form.Item>
-          <Form.Item
-            label="Lớp"
-            name="Class"
-            rules={[
-              {
-                required: true,
-                message: "Không được để trống!",
-              },
-            ]}
-          >
-            <Input value={Class} onChange={(e) => setClass(e.target.value)} />
+            <Input
+              value={subjects}
+              onChange={(e) => setSubject(e.target.value)}
+            />
           </Form.Item>
           <Form.Item
             label="Khối"
@@ -380,13 +349,13 @@ function ClassManage() {
         </Form>
       </ModalComponent>
       <ModalComponent
-        title="Xóa học sinh"
+        title="Xóa môn học"
         isOpen={isModalDeleted}
         onCancel={handleCancel}
         okButtonProps={{ style: { display: "none" } }}
         footer={null}
       >
-        <span>Bạn có muốn chắc xóa lớp này</span>
+        <span>Bạn có muốn chắc môn học này</span>
 
         <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
           <Button
@@ -401,4 +370,4 @@ function ClassManage() {
   );
 }
 
-export default ClassManage;
+export default SubjectManage;
