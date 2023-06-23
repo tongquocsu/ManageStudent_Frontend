@@ -8,6 +8,7 @@ import sendLetter from '../pages/sendLetter'
 import inputScore from '../pages/inputScore'
 import classList from '../pages/classList'
 import myProfile from '../pages/myProfile'
+import editMyProfile from '../pages/myProfile/editMyProdile.jsx'
 import Home from '../pages/Home'
 
 const publicRoutes = [
@@ -20,6 +21,7 @@ const publicRoutes = [
     {path: '/teacher/sendLetter', component: sendLetter},
     {path: '/teacher/classlist', component: classList},
     {path: '/teacher/inputScore', component: inputScore},
+    {path: '/teacher/editMyProfile', component: editMyProfile},
     {path: '/teacher/profile', component: myProfile},
     {path: '/',  component: Home},
     
