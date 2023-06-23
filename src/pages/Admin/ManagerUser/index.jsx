@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Form, Input, Select } from "antd";
+import { toast } from "react-toastify";
+import { Form, Input, Select, Modal } from "antd";
 const { Option } = Select;
-
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
 import Sidebar from "../../../components/Sidebar";
 import TableItem from "../../../components/TableItem";
 import ModalItem from "../../../components/ModalItem";
@@ -16,6 +17,8 @@ const ManagerUser = () => {
   const formRef = useRef(null);
 
   const [isModalEdit, setIsModalEdit] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+
   useEffect(() => {
     // Initialize the data array
     const initialData = [];
@@ -35,7 +38,7 @@ const ManagerUser = () => {
   useEffect(() => {
     // Update the form values when the selectedUser changes
     if (selectedUser) {
-      formRef.current.setFieldsValue({ user: { ...selectedUser } });
+      formRef.current?.setFieldsValue({ user: { ...selectedUser } });
     }
   }, [selectedUser]);
 
@@ -49,7 +52,15 @@ const ManagerUser = () => {
           }}
           className="text-green-600 text-lg cursor-pointer border border-gray-400 rounded-md p-1"
         />
-        <DeleteOutlined className="text-[#EC6453] text-lg cursor-pointer border border-gray-400 rounded-md p-1" />
+        <span>
+          <DeleteOutlined
+            onClick={() => {
+              setSelectedUser(user);
+              showConfirm();
+            }}
+            className="text-[#EC6453] text-lg cursor-pointer border border-gray-400 rounded-md p-1"
+          />
+        </span>
       </div>
     );
   };
@@ -107,7 +118,7 @@ const ManagerUser = () => {
 
     setData(updatedData);
     setIsModalEdit(false);
-    formRef.current.resetFields();
+    formRef.current?.resetFields();
   };
 
   // handle CRUD
@@ -119,9 +130,30 @@ const ManagerUser = () => {
     setFormValues({ user: { ...record } });
     console.log("user: ", record);
   };
+
+  const handleConfirmOk = () => {
+    const updatedData = data.filter((user) => user.key !== selectedUser.key);
+    setData(updatedData);
+    formRef.current?.resetFields();
+    setIsConfirmVisible(false);
+    setIsModalEdit(false);
+    console.log("Click confirm ok");
+    toast.success("Xóa thành công!");
+  };
+
+  const handleConfirmCancel = () => {
+    setIsConfirmVisible(false);
+  };
+
+  const showConfirm = () => {
+    setIsConfirmVisible(true);
+    setIsModalEdit(false);
+  };
+
   const handleOk = () => {
     formRef.current.submit();
   };
+
   const handleCancel = () => {
     setIsModalEdit(false);
   };
@@ -134,6 +166,17 @@ const ManagerUser = () => {
       <div className="w-3/4">
         <h1 className="text-gray-700 text-center">ManagerUser</h1>
         <TableItem data={data} columns={columns} />
+        <Modal
+          title="Delete User"
+          visible={isConfirmVisible}
+          onOk={handleConfirmOk}
+          onCancel={handleConfirmCancel}
+          okText="Yes"
+          okType="danger"
+          cancelText="No"
+        >
+          <p>Are you sure you want to delete this user?</p>
+        </Modal>
         <ModalItem
           title="Edit User"
           isOpen={isModalEdit}
