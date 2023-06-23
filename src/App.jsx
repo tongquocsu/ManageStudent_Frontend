@@ -1,8 +1,11 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "./components/Header";
+import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
+
+import Header from "./components/Header";
 import routes from "../src/routes/index.js";
+
 function App() {
   return (
     <Routes>

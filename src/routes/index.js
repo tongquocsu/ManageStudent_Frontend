@@ -1,6 +1,6 @@
 import ForgotPassword from "../pages/ForgotPassword";
 import Login from "../pages/Login";
-import Home from "../pages/Home";
+import HomeAdmin from "../pages/HomeAdmin";
 import NoPage from "../pages/NoPage";
 import ManagerUser from "../pages/Admin/ManagerUser";
 
@@ -12,10 +12,17 @@ import ParentMeeting from "../pages/Admin/Teacher/ParentMeeting";
 import Settings from "../pages/Admin/Settings";
 import Logout from "../pages/Logout";
 import News from "../pages/News";
+import Home from "../pages/Home";
 const routes = [
   {
-    path: "/admin",
+    path: "/",
     page: Home,
+    isShowHeader: true,
+  },
+
+  {
+    path: "/admin",
+    page: HomeAdmin,
     isShowHeader: true,
   },
   {
