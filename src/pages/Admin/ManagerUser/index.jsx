@@ -18,6 +18,7 @@ const ManagerUser = () => {
 
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Initialize the data array
@@ -108,19 +109,6 @@ const ManagerUser = () => {
   };
   /* eslint-enable no-template-curly-in-string */
 
-  const onFinish = (values) => {
-    const updatedData = data.map((user) => {
-      if (user.key === selectedUser.key) {
-        return { ...user, ...values.user };
-      }
-      return user;
-    });
-
-    setData(updatedData);
-    setIsModalEdit(false);
-    formRef.current?.resetFields();
-  };
-
   // handle CRUD
 
   const handleEdit = (record) => {
@@ -158,6 +146,33 @@ const ManagerUser = () => {
     setIsModalEdit(false);
   };
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  const filteredData = data.filter((user) => {
+    const { fullname, email, phone, role } = user;
+    const searchValue = searchQuery.toLowerCase();
+    return (
+      fullname.toLowerCase().includes(searchValue) ||
+      email.toLowerCase().includes(searchValue) ||
+      phone.toLowerCase().includes(searchValue) ||
+      role.toLowerCase().includes(searchValue)
+    );
+  });
+
+  const onFinish = (values) => {
+    const updatedData = data.map((user) => {
+      if (user.key === selectedUser.key) {
+        return { ...user, ...values.user };
+      }
+      return user;
+    });
+
+    setData(updatedData);
+    setIsModalEdit(false);
+    formRef.current?.resetFields();
+  };
+
   return (
     <div className="flex">
       <div className="w-1/4">
@@ -165,7 +180,17 @@ const ManagerUser = () => {
       </div>
       <div className="w-3/4 mr-14">
         <h1 className="text-gray-700 text-center mt-4">Quản lý người dùng</h1>
-        <TableItem data={data} columns={columns} className="mb-4" />
+        <div className="my-2 grid justify-items-end">
+          <input
+            type="text"
+            placeholder="Tìm kiếm người dùng"
+            onChange={handleSearch}
+            className="w-full py-2 px-3 rounded-md bg-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ maxWidth: "400px" }}
+          />
+        </div>
+
+        <TableItem data={filteredData} columns={columns} className="mb-4" />
         <Modal
           title="Xóa người dùng"
           visible={isConfirmVisible}
