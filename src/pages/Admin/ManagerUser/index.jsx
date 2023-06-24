@@ -137,7 +137,6 @@ const ManagerUser = () => {
     formRef.current?.resetFields();
     setIsConfirmVisible(false);
     setIsModalEdit(false);
-    console.log("Click confirm ok");
     toast.success("Xóa thành công!");
   };
 
@@ -152,6 +151,7 @@ const ManagerUser = () => {
 
   const handleOk = () => {
     formRef.current.submit();
+    toast.success("Cập nhật thành công!");
   };
 
   const handleCancel = () => {
