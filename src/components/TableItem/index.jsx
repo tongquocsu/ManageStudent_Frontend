@@ -36,7 +36,7 @@ function TableItem(props) {
           disabled={!hasSelected}
           loading={loading}
         >
-          Reload
+          Tải lại
         </Button>
         <span style={{ marginLeft: 8 }}>
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}

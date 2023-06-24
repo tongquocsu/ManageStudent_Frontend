@@ -74,7 +74,7 @@ const ManagerUser = () => {
       dataIndex: "email",
     },
     {
-      title: "SĐT",
+      title: "Số điện thoại",
       dataIndex: "phone",
     },
     {
@@ -163,27 +163,30 @@ const ManagerUser = () => {
       <div className="w-1/4">
         <Sidebar />
       </div>
-      <div className="w-3/4">
-        <h1 className="text-gray-700 text-center">ManagerUser</h1>
-        <TableItem data={data} columns={columns} />
+      <div className="w-3/4 mr-14">
+        <h1 className="text-gray-700 text-center mt-4">Quản lý người dùng</h1>
+        <TableItem data={data} columns={columns} className="mb-4" />
         <Modal
-          title="Delete User"
+          title="Xóa người dùng"
           visible={isConfirmVisible}
           onOk={handleConfirmOk}
           onCancel={handleConfirmCancel}
-          okText="Yes"
+          okText="Có"
           okType="danger"
-          cancelText="No"
+          cancelText="Không"
         >
-          <p>Are you sure you want to delete this user?</p>
+          <p>Bạn có chắc là muốn xóa người dùng này?</p>
         </Modal>
         <ModalItem
-          title="Edit User"
+          title="Cập nhật người dùng"
           isOpen={isModalEdit}
           onCancel={handleCancel}
           editRecord={editRecord}
           onOk={handleOk}
           setEditRecord={setEditRecord}
+          okType="default"
+          okText="Cập nhật"
+          cancelText="Hủy"
         >
           <Form
             {...layout}
