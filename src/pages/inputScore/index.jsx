@@ -27,22 +27,19 @@ const tableDate = [
     edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
   },
 ];
-
-
-const inputScore = () => {
+function index() {
   return (
-    <div >
-    
-      <Table className="border-1 mt-6 rounded-lg border-[#515ddd]" dataSource={tableDate} pagnination={false} bordered>
-        <Column className="text-center" title="STT" dataIndex="STT"/> 
-        <Column className="text-center" title="Họ và Tên" dataIndex="nameStudent" />
-        <Column className="text-center" title="Điểm" dataIndex="score" />
-        <Column className="text-center" title="Loại điểm" dataIndex="typeScore" />
-        <Column className="text-center" title="Lưu thay đổi" dataIndex="edit" />
+    <div>
+      <Table className="border-1 w-[780px] mt-6 rounded-lg border-[#515ddd]" dataSource={tableDate} pagnination={false} bordered>
+        <Column className="text-center w-1/12" title="STT" dataIndex="STT"/> 
+        <Column className="text-center w-4/12" title="Họ và Tên" dataIndex="nameStudent" />
+        <Column className="text-center w-2/12" title="Điểm" dataIndex="score" />
+        <Column className="text-center w-3/12" title="Loại điểm" dataIndex="typeScore" />
+        <Column className="text-center w-2/12" title="Lưu thay đổi" dataIndex="edit" />
       </Table>
     </div>
     
   )
 }
 
-export default inputScore
+export default index

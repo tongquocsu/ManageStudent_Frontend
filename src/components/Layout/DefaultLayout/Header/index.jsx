@@ -26,9 +26,9 @@ function Header() {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <div>
+        <div >
           <img src="" />
-          <span>logo</span>
+          <span className="shadow-lg shadow-red-500 md:shadow-xl p-2 rounded-xl text-[#515ddd]">Education</span>
         </div>
         <div>
           <ul className="header-menu font-sans">
@@ -54,7 +54,7 @@ function Header() {
             <Avatar
               shape="circle"
               className="mr-3"
-              src="https://yt3.googleusercontent.com/mm2-5anuZ6ghmK2zL6QM7wciD6kuupOfOagiAh5vZE1hx9tRhKEXTAExZUUY4PVq2RSw9jBpBQ=s900-c-k-c0x00ffffff-no-rj"
+              src="https://cdn.pixabay.com/photo/2023/06/03/17/11/giraffe-8038107_640.jpg"
             />
           </Badge>
         </Space>

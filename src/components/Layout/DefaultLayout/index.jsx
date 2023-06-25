@@ -1,15 +1,15 @@
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './Header/index';
+import Sidebar from './Sidebar/index';
 
 const DefaultLayout =  ({children}) => {
     return (
         <div className="p-1">
             <Header/>
-            <div className="w-12/12 flex">
-                <div className="w-3/12 ">
+            <div className=" flex">
+                <div className="mr-5">
                     <Sidebar />
                 </div>
-                <div className="w-9/12 ml-[10px] mr-3">{children}</div> 
+                <div className="ml-3 mr-3 grid justify-items-center">{children}</div> 
             </div>
         </div>
     )

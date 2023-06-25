@@ -1,8 +1,8 @@
-const sendLetter = () => {
+function index() {
   return (
-    <div className="ml-[10px]">
-      <div className="border-1 border-[#b5afaf] rounded-lg">
-          <div className="flex flex-col items-center mt-[30px]">
+    <div className="ml-[10px] ">
+      <div>
+          <div className="flex flex-col w-12/12 items-center mt-[30px]">
             <p>Cộng hoà xã hội chủ nghĩa việt nam </p>
             <p> Độc lập - Tự do - Hạnh phúc</p> 
             <h2 className="letter-name font-bold text-[18px] my-5">Thư mời họp phụ huynh</h2>
@@ -28,4 +28,4 @@ const sendLetter = () => {
   )
 }
 
-export default sendLetter
+export default index

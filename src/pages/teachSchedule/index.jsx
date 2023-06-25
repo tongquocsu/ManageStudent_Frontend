@@ -1,42 +1,57 @@
-import {Table} from 'antd';
-const {Column} = Table  
-const tableDate = [
-  {
-    key: '1',
-    tiet: '1',
-    thu2: '10C7',
-    thu3: '6A',
-    
-  },
-  {
-    key: '2',
-    tiet: '2',
-    nameStudent: 'Lê Thị Thu',
-    
-  },
-  {
-    key: '3',
-    tiet: '3',
-    nameStudent: 'Trần Minh Tuấn',
-   
-  },
+import { Table } from "antd";
+const columns = [
+    {
+        title: 'Thứ hai',
+        dataIndex: 'subject',
+        width: 140,
+    },
+    {
+        title: 'Thứ ba',
+        dataIndex: 'subject',
+        width: 140,
+    },
+    {
+        title: 'Thứ tư',
+        dataIndex: 'subject',
+        width: 140,
+    },
+    {
+        title: 'Thứ năm',
+        dataIndex: 'subject',
+        width: 140,
+    },
+    {
+        title: 'Thứ sáu',
+        dataIndex: 'subject',
+        width: 140,
+    },
+    {
+        title: 'Thứ bảy',
+        dataIndex: 'subject',
+        width: 140,
+    },
 ];
-function index() {
-  return (
-    <div>
-      <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Thời khóa biểu</h2>
-      <Table dataSource={tableDate} pagnination={false} bordered className="border-1  rounded-lg border-[#515ddd]" >
-        <Column className="text-center" title="Tiết" dataIndex="tiet"/> 
-        <Column className="text-center" title="Thứ 2" dataIndex="thu2" />
-        <Column className="text-center" title="Thứ 3" dataIndex="thu3" />
-        <Column className="text-center" title="Thứ 4" dataIndex="thu4" />
-        <Column className="text-center" title="Thứ 5" dataIndex="thu5" />
-        <Column className="text-center" title="Thứ 6" dataIndex="thu6" />
-        <Column className="text-center" title="Thứ 7" dataIndex="thu7" />
-        <Column className="text-center" title="Chủ nhật" dataIndex="chunhat" />
-      </Table>
-    </div>
-  )
-}
-export default index
 
+const data = [];
+for(let i = 0; i < 5; i++){
+    data.push({
+        subject: 'Ngữ Văn',
+    });
+}
+
+function Schedule() {
+    return (
+        <div>
+            <div className="flex">
+                <div className="grid justify-items-center">
+                    <h2 className="text-base font-bold text-center my-3">Thời khóa biểu HKI năm 2023</h2>
+                    <Table className="mx-5" columns={columns} dataSource={data} pagination={false}/>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+        
+
+export default Schedule;
