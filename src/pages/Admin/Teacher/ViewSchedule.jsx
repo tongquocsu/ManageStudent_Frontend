@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import Sidebar from "../../../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar";
 const { Column } = Table;
 const tableDate = [
   {

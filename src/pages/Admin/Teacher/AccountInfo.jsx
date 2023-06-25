@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Sidebar from "../../../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar";
 
 function AccountInfo() {
   const [modal, setModal] = useState(false);
