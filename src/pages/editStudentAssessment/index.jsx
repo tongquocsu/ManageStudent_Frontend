@@ -1,7 +1,7 @@
 function index() {
   return (
     <div>
-      <p>edit judge</p>
+      <p>chinh sua phe binh hoc sinh</p>
     </div>
   )
 }
