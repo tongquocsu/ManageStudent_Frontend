@@ -1,4 +1,5 @@
-import {Table} from 'antd';
+import {Table, Button} from 'antd';
+import { useNavigate  } from 'react-router';
 
 const {Column} = Table  
 const tableDate = [
@@ -28,6 +29,10 @@ const tableDate = [
   },
 ];
 function index() {
+  let navigate = useNavigate()
+  const handleBackData = () =>{
+    navigate('/teacher/classlist');
+  }
   return (
     <div>
       <Table className="border-1 w-[780px] mt-6 rounded-lg border-[#515ddd]" dataSource={tableDate} pagnination={false} bordered>
@@ -37,6 +42,9 @@ function index() {
         <Column className="text-center w-3/12" title="Loại điểm" dataIndex="typeScore" />
         <Column className="text-center w-2/12" title="Lưu thay đổi" dataIndex="edit" />
       </Table>
+      <div className="grid justify-items-start mt-3">
+        <Button type="primary" onClick={handleBackData} className="bg-[#515ddd]">Quay lại</Button>
+      </div>
     </div>
     
   )
