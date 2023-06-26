@@ -47,9 +47,9 @@ function index() {
       <div className="grid grid-rows-1 my-4 pl-3 ">
         <div className="grid-cols-4 flex">
           <p className=" mr-8">Lớp: ...</p>
-          <p className="text-[#000] font-bold flex-none w-[450px]">Sỉ số: ....</p>
-          <button className="flex-auto border border-1 py-1 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Nhập điểm</Link></button>
-          <button className="flex-auto border border-1 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/inputScore">Gửi Thư mời</Link></button>
+          <p className="text-[#000] font-bold flex-none w-[430px]">Sỉ số: ....</p>
+          <button className="flex-auto border border-1 py-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Nhập điểm</Link></button>
+          <button className="flex-auto border border-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/sendLetter">Gửi Thư mời</Link></button>
         </div>
       </div>
       <Table dataSource={tableDate} pagnination={false} bordered>
