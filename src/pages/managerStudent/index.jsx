@@ -1,5 +1,4 @@
-
-const manager_student = () => {
+function index() {
   return (
     <div className="">
         <h2 className="m-4 text-base font-bold text-center">Danh sách học sinh lớp</h2>
@@ -50,4 +49,4 @@ for(let i = 0; i < 5; i++){
 }
 
 
-export default manager_student
+export default index
