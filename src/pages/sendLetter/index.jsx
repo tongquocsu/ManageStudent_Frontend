@@ -1,4 +1,10 @@
+import { useNavigate  } from 'react-router';
+import { Button} from 'antd';
 function index() {
+  let navigate = useNavigate()
+  const handleBackData = () =>{
+    navigate('/teacher/managerClass');
+  }
   return (
     <div className="ml-[10px] ">
       <div>
@@ -24,7 +30,11 @@ function index() {
             <button className="border-1 mt-auto px-4 py-2 rounded-[30px] text-[#3F3030] bg-[#FDCC58] font-bold mr-[50px] mb-[50px] hover:bg-[#515ddd] hover:text-[#fff]">Gửi tất cả</button>
           </div>
       </div>
+      <div className="grid justify-items-start">
+        <Button type="primary" onClick={handleBackData} className="bg-[#515ddd]">Quay lại</Button>
+      </div>
     </div>
+
   )
 }
 
