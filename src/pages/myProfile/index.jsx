@@ -16,20 +16,12 @@ function index() {
     "Address",
   ]);
   const [Newinfo, setNewInfo] = useState([
-    {
-      teacherId: "1",
-      name: "Nguyễn Văn A",
-      email: "tuan@gmail.com",
-      phone: "09235134365",
-      address: "CT",
-    },
-    {
-      teacherId: "2",
-      name: "Nguyễn Văn Tuấn",
-      email: "tuan@gmail.com",
-      phone: "09235134365",
-      address: "CT",
-    }
+    
+       "1",
+       "Nguyễn Văn A",
+       "tuan@gmail.com",
+       "09235134365",
+       "CT",
   ]);
   //------------chỉnh sửa thông tin giáo viên--------------
   const [newIdInfo, setNewIdInfo] = useState('');
@@ -57,12 +49,12 @@ function index() {
     setImageInfo(e.currentTarget.value);
   };
   const onPressEditingInfo = (content) => {
-    setNewIdInfo(content.teacherId)
-    setNewNameInfo(content.name)
-    setNewEmailInfo(content.email)
-    setNewphoneInfo(content.phone)
-    setNewAddressInfo(content.address)
-    setImageInfo(content.image)
+    setNewIdInfo(conteteacherId)
+    setNewNameInfo(contename)
+    setNewEmailInfo(conteemail)
+    setNewphoneInfo(contephone)
+    setNewAddressInfo(conteaddress)
+    setImageInfo(conteimage)
   };
   const onClickUpdateContent = () => {
     let index = newstatusInfo.findIndex(s =>s.teacherId === editingRow)
@@ -86,7 +78,7 @@ function index() {
   return (
     <div>
       <div className="grid justify-items-center">
-        <div className="mt-4 border rounded-[20px] p-[20px] w-9/12">
+        <div className="mt-4 border rounded-[20px] p-[20px] w-12/12">
           <div className="flex">
             <div className="border-r border-[#f0c0e0] w-48 h-52">
               <img
@@ -105,7 +97,7 @@ function index() {
                 })}
               </thead>
               <tbody className="pl-3 font-mono">
-                {info.map((s) => {
+                {Newinfo.map((s) => {
                   return (
                     <tr>
                       <td>{s}</td>
