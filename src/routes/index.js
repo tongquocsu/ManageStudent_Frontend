@@ -1,4 +1,4 @@
-import editStudentAssessment from '../pages/editStudentAssessment'
+
 import studentAssessment from '../pages/studentAssessment'
 import reportManagement from '../pages/reportManagement'
 import studentProfile from '../pages/studentProfile'
@@ -12,7 +12,7 @@ import myProfile from '../pages/myProfile'
 import Home from '../pages/Home'
 
 const publicRoutes = [
-    {path: '/teacher/editStudentAssessment', component: editStudentAssessment},
+
     {path: '/teacher/studentAssessment', component: studentAssessment},
     {path: '/teacher/studentProfile', component: studentProfile},
     {path: '/teacher/reportManagement', component: reportManagement},
