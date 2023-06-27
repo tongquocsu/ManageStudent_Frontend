@@ -24,7 +24,7 @@ function SubjectManage() {
   const [isLoading, setIsLoading] = useState(false);
   const [deleteSubject, setDeleteSubject] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [listSearchClass, setListSearchClass] = useState([])
+  const [listSearchClass, setListSearchClass] = useState([]);
   const renderAction = (text, SubjectItem) => {
     return (
       <div>
@@ -186,20 +186,23 @@ function SubjectManage() {
   const handleSearch = (value) => {
     setSearchValue(value);
   };
-  useEffect(()=>{
-    const filterSearch = filteredData.filter((item)=>{
-      console.log(item)
+  useEffect(() => {
+    const filterSearch = filteredData.filter((item) => {
+      console.log(item);
       const classText = item.Subject.toLowerCase();
       const searchValueText = searchValue.toLowerCase();
-      return classText.includes(searchValueText)
-    })
-    setListSearchClass(filterSearch)
-  },[searchValue])
+      return classText.includes(searchValueText);
+    });
+    setListSearchClass(filterSearch);
+  }, [searchValue]);
   return (
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
         <div className="relative">
-          Khối: {selectedSubject} <DownOutlined onClick={handletoggle} />
+          <div className="flex items-center">
+            {" "}
+            Khối: {selectedSubject} <DownOutlined onClick={handletoggle} />
+          </div>
           {isShowOption && (
             <ul
               className="absolute z-10 bg-white text-center rounded-sm w-[100px] shadow min-h-[120px] overflow-y-auto"
@@ -217,7 +220,10 @@ function SubjectManage() {
             </ul>
           )}
         </div>
-        <SearchInput placeholder="Tìm kiếm theo môn học" onSearch={handleSearch} />
+        <SearchInput
+          placeholder="Tìm kiếm theo môn học"
+          onSearch={handleSearch}
+        />
         <Button
           className="bg-black text-white px-10"
           onClick={handleAddSubject}
@@ -226,12 +232,12 @@ function SubjectManage() {
         </Button>
       </div>
       <Loading isLoading={isLoading}>
-      {searchValue ? (
-        <TableComponent data={listSearchClass} columns={columns} />
-      ) : (
-        <TableComponent data={filteredData} columns={columns} />
-      )}
-    </Loading>
+        {searchValue ? (
+          <TableComponent data={listSearchClass} columns={columns} />
+        ) : (
+          <TableComponent data={filteredData} columns={columns} />
+        )}
+      </Loading>
       <ModalComponent
         title="Thêm môn học"
         onCancel={handleCancel}

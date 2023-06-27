@@ -11,7 +11,7 @@ function Login() {
   const Navigate = useNavigate();
   
   const handleSubmit = () => {
-    Navigate("/manager-classroom")
+    Navigate("/manager-academic")
   };
 
   useEffect(() => {

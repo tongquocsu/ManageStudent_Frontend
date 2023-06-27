@@ -221,7 +221,7 @@ function StudentManage() {
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
         <div className="relative">
-          Lớp: {selectedClass} <DownOutlined onClick={handletoggle} />
+         <div className="flex items-center"> Lớp: {selectedClass} <DownOutlined onClick={handletoggle} /></div>
           {isShowOption && (
             <ul
               className="absolute z-10 bg-white text-center rounded-sm w-[100px] shadow min-h-[120px] overflow-y-auto"

@@ -212,7 +212,9 @@ function ClassManage() {
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
         <div className="relative">
-          Khối: {selectedClass} <DownOutlined onClick={handletoggle} />
+          <div className="flex items-center">
+            Khối: {selectedClass} <DownOutlined onClick={handletoggle} />
+          </div>
           {isShowOption && (
             <ul
               className="absolute z-10 bg-white text-center rounded-sm w-[100px] shadow min-h-[120px] overflow-y-auto"
