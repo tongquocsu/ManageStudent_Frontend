@@ -31,6 +31,7 @@ const ManagerUser = () => {
         email: `test@gmail${i}.com`,
         phone: `09999999${i}`,
         role: "User",
+        address: `Address${i}`,
       });
     }
     setData(initialData);
@@ -81,6 +82,10 @@ const ManagerUser = () => {
     {
       title: "Vai trò",
       dataIndex: "role",
+    },
+    {
+      title: "Địa chỉ",
+      dataIndex: "address",
     },
     {
       title: "Hành động",
@@ -276,7 +281,29 @@ const ManagerUser = () => {
                 }}
               />
             </Form.Item>
-
+            <Form.Item
+              name={["user", "phone"]} // Update the name to match the field name
+              label="Số điện thoại"
+              rules={[
+                {
+                  required: true,
+                  message: "Không được để trống!",
+                },
+              ]}
+            >
+              <Input
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFormValues((prevValues) => ({
+                    ...prevValues,
+                    user: {
+                      ...prevValues.user,
+                      fullname: value,
+                    },
+                  }));
+                }}
+              />
+            </Form.Item>
             <Form.Item
               name={["user", "role"]}
               label="Vai trò"
@@ -304,6 +331,29 @@ const ManagerUser = () => {
                 <Option value="Kế toán">Kế toán</Option>
                 <Option value="Quản lý học vụ">Quản lý học vụ</Option>
               </Select>
+            </Form.Item>
+            <Form.Item
+              name={["user", "address"]} // Update the name to match the field name
+              label="Địa chỉ"
+              rules={[
+                {
+                  required: true,
+                  message: "Không được để trống!",
+                },
+              ]}
+            >
+              <Input
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFormValues((prevValues) => ({
+                    ...prevValues,
+                    user: {
+                      ...prevValues.user,
+                      fullname: value,
+                    },
+                  }));
+                }}
+              />
             </Form.Item>
           </Form>
         </ModalItem>
