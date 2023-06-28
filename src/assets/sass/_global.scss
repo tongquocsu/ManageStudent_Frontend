@@ -70,14 +70,22 @@ body {
     margin-right: auto;
     text-align: center;
   }
+  
+  .info-white{
+    i{
+      color: #ffffff;
+    }
+  }
   .info-green{
     i{
       color: #39DC98;
+      margin-top: 10px;
     }
   }
   .info-red{
     i{
        color: #FD809E;
+       margin-top: 8px;
     }
    
   }

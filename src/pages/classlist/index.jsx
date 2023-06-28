@@ -51,14 +51,14 @@ const {Column} = Table
       <div className="pr-5"> 
         <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Danh sách các lớp</h2>
 
-          <Table dataSource={dataSource} pagnination={false} bordered className="border-1 rounded-lg border-[#515ddd]">
+          <Table dataSource={dataSource} pagnination={false} bordered className="border-1 mt-6 rounded-lg border-[#515ddd] w-[780px]">
             <Column className="text-center" title="STT" dataIndex="stt" />
             <Column className="text-center" title="Lớp" dataIndex="name" />
             <Column className="text-center" title="Nhập điểm" dataIndex="score"/>
             <Column className="text-center" title="Sỉ số" dataIndex="sl"/>
             <Column title="GVCN" dataIndex="GVCN"/>
             <Column className="w-[100px] text-center" title="Chỉnh sữa" dataIndex="edit"/>
-            <Column className="w-[50px]" dataIndex="delete"/>
+            <Column title=" "className="w-[50px]" dataIndex="delete"/>
           </Table>
       </div>
     )

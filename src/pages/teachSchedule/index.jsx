@@ -1,4 +1,5 @@
 import { Table } from "antd";
+import {Link } from 'react-router-dom';
 const columns = [
     {
         title: 'Thứ hai',
@@ -42,6 +43,12 @@ for(let i = 0; i < 5; i++){
 function Schedule() {
     return (
         <div>
+            <div className="grid-cols-4 flex my-3">
+                <p className=" mr-8">Lớp: ...</p>
+                <p className="text-[#000] font-bold flex-none w-[430px]">Sỉ số: ....</p>
+                <button className="flex-auto border border-1 py-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Nhập điểm</Link></button>
+                <button className="flex-auto border border-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Gửi Thư mời</Link></button>
+            </div>
             <div className="flex">
                 <div className="grid justify-items-center">
                     <h2 className="text-base font-bold text-center my-3">Thời khóa biểu HKI năm 2023</h2>

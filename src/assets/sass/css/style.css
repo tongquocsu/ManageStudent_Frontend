@@ -97,12 +97,18 @@ button {
   text-align: center;
 }
 
+.info-white i {
+  color: #ffffff;
+}
+
 .info-green i {
   color: #39DC98;
+  margin-top: 10px;
 }
 
 .info-red i {
   color: #FD809E;
+  margin-top: 8px;
 }
 
 @media screen and (max-width: 767px) {
@@ -145,23 +151,6 @@ button {
   text-align: left;
   background-color: #04AA6D;
   color: white;
-}
-
-.menu {
-  padding: 20px;
-  border: 1px solid #b5afaf;
-  border-radius: 10px;
-  min-height: 700px;
-}
-.menu-item {
-  line-height: 2.5rem;
-}
-.menu-item i {
-  padding-right: 20px;
-  padding-left: 15px;
-}
-.menu-dropdown i {
-  margin-left: -13px;
 }
 
 .banner img {

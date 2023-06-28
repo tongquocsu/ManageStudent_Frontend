@@ -77,8 +77,9 @@ function index() {
   //--------------------------------------------------------
   return (
     <div>
-      <div className="grid justify-items-center">
-        <div className="mt-4 border rounded-[20px] p-[20px] w-12/12">
+      <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Thông tin cá nhân</h2>
+      <div className="grid justify-items-center ">
+        <div className="mt-1 border rounded-[20px] p-[20px] w-12/12">
           <div className="flex">
             <div className="border-r border-[#f0c0e0] w-48 h-52">
               <img
