@@ -15,7 +15,7 @@ const routes = [
     isShowHeader: false,
   },
   {
-    path: "/",
+    path: "/manager-academic",
     page: ManageAcademic,
     isShowHeader: true,
   },
