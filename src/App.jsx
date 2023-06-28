@@ -1,10 +1,15 @@
 import "./App.css";
 import Header from "./components/Header";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import routes from "../src/router";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 function App() {
+  const Navigate = useNavigate();
+  const getAccessToken = () => {
+    return localStorage.getItem("access_token");
+  };
+
   return (
     <div>
       <Routes>
@@ -18,7 +23,11 @@ function App() {
               element={
                 <>
                   {isShowHeader && <Header />}
-                  <Page />
+                  {route.path === "/login" || getAccessToken() ? (
+                    <Page />
+                  ) : (
+                    <Navigate to="/login" />
+                  )}
                 </>
               }
             />
