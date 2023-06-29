@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Table } from "antd";
 import { useState } from "react";
 
 function TableItem(props) {
@@ -30,14 +30,6 @@ function TableItem(props) {
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <Button
-          type="primary"
-          onClick={start}
-          disabled={!hasSelected}
-          loading={loading}
-        >
-          Tải lại
-        </Button>
         <span style={{ marginLeft: 8 }}>
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
         </span>
