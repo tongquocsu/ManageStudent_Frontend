@@ -7,12 +7,12 @@ function index() {
   const [statusStudent, newstatusStudent] = useState([
     {
       _id: 1,
-      date: "15/6/2022",
+      date: "2022-06-15",
       desc: "Trốn học tiết ngữ văn",
     },
     {
       _id: 2,
-      date: "19/7/2022",
+      date: "2022-07-19",
       desc: "Trốn học tiết toán",
     },
   ]);
@@ -62,13 +62,19 @@ function index() {
     setNewContent('')
     setEditingRow('')
   }
+  const onPressDeleteRow = (_id) => {
+    let statusCopy =  [...statusStudent];
+    let index = statusStudent.findIndex(s => s._id === _id);
+    statusCopy.splice(index, 1);
+    newstatusStudent(statusCopy);
+  }
   
   return (
     <>
       <div class="mt-4">
       <h2 className="my-3 text-center font-bold">Đánh giá học sinh</h2>
-        <table className="border rounded-[20px] w-full">
-          <thead className="border bg-[#515ddd] text-white text-center">
+        <table className="border  rounded-[20px] w-full">
+          <thead className="bg-[#515ddd] text-white text-center">
             <tr>
               {title.map(t => {
                 return <th key={t}>{t}</th>;
@@ -86,8 +92,8 @@ function index() {
                     <td className="pl-3 border-y  w-[50px]">
                       <Button onClick={e => onPressEditingRow(s)}> <i className="fa-solid fa-pencil"></i> </Button>
                     </td>
-                    <td className="pl-3 border-y w-[50px]">
-                      <i className="fa-solid fa-trash"></i>
+                    <td className="pl-3 border-y  w-[50px]">
+                      <Button onClick={e => onPressDeleteRow(s._id)}> <i className="fa-solid fa-trash"></i> </Button>
                     </td>
                 </tr>
               );
