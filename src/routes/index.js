@@ -4,11 +4,11 @@ import HomeAdmin from "../pages/HomeAdmin";
 import NoPage from "../pages/NoPage";
 import ManagerUser from "../pages/Admin/ManagerUser";
 
-import AccountInfo from "../pages/Admin/Teacher/AccountInfo";
-import HomeTeacher from "../pages/Admin/Teacher/Home";
-import ClassList from "../pages/Admin/Teacher/ClassList";
-import ViewSchedule from "../pages/Admin/Teacher/ViewSchedule";
-import ParentMeeting from "../pages/Admin/Teacher/ParentMeeting";
+import AccountInfo from "../pages/Admin/Teacher/AccountInfo.jsx";
+import HomeTeacher from "../pages/Admin/Teacher/Home.jsx";
+import ClassList from "../pages/Admin/Teacher/ClassList.jsx";
+import ViewSchedule from "../pages/Admin/Teacher/ViewSchedule.jsx";
+import ParentMeeting from "../pages/Admin/Teacher/ParentMeeting.jsx";
 import Settings from "../pages/Admin/Settings";
 import Logout from "../pages/Logout";
 import News from "../pages/News";

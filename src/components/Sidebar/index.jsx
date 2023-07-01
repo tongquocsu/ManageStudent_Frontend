@@ -33,10 +33,16 @@ const itemsTop = [
     getItem("Lớp học", "16", <FontAwesomeIcon icon="school" />),
     getItem("Môn học", "17", <FontAwesomeIcon icon="book" />),
   ]),
+  getItem("Tạo người dùng", "sub5", <FontAwesomeIcon icon="user-tie" />, [
+    getItem("Học sinh", "18", <FontAwesomeIcon icon="user-graduate" />),
+    getItem("Giáo viên", "19", <FontAwesomeIcon icon="calendar-days" />),
+    getItem("Kế toán", "20", <FontAwesomeIcon icon="school" />),
+    getItem("Quản lý học vụ", "21", <FontAwesomeIcon icon="book" />),
+  ]),
 ];
 const itemsBottom = [
-  getItem("Cài đặt", "sub5", <FontAwesomeIcon icon="gear" />),
-  getItem("Đăng xuất", "sub6", <FontAwesomeIcon icon="right-to-bracket" />),
+  getItem("Cài đặt", "sub6", <FontAwesomeIcon icon="gear" />),
+  getItem("Đăng xuất", "sub7", <FontAwesomeIcon icon="right-to-bracket" />),
 ];
 
 // submenu keys of first level
