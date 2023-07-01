@@ -13,6 +13,10 @@ import Settings from "../pages/Admin/Settings";
 import Logout from "../pages/Logout";
 import News from "../pages/News";
 import Home from "../pages/Home";
+import ManagerStudent from "../pages/Admin/ManageAcademic/ManagerStudent";
+import MangerSchedule from "../pages/Admin/ManageAcademic/MangerSchedule";
+import MangerClassroom from "../pages/Admin/ManageAcademic/MangerClassroom";
+import ManagerSubject from "../pages/Admin/ManageAcademic/ManagerSubject";
 const routes = [
   {
     path: "/",
@@ -58,6 +62,26 @@ const routes = [
   {
     path: "/admin/teacher/parent-meeting",
     page: ParentMeeting,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/acc-staff/student",
+    page: ManagerStudent,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/acc-staff/schedule",
+    page: MangerSchedule,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/acc-staff/classroom",
+    page: MangerClassroom,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/acc-staff/subject",
+    page: ManagerSubject,
     isShowHeader: true,
   },
 
