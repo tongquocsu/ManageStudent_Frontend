@@ -5,7 +5,7 @@ import NotPage from "../pages/NoPage/NoPage";
 
 const routes = [
   {
-    path: "/login",
+    path: "/",
     page: Login,
     isShowHeader: false,
   },

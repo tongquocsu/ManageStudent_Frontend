@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import image from "../../assets/slider/slider.png";
 import { loginUser } from "../../service/userService";
 import Loading from "../../components/Loading";
+import { toast } from "react-toastify";
 // eslint-disable-next-line react/prop-types
 function Login() {
   const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ function Login() {
         localStorage.setItem("access_token", data.token);
       }
     } catch (err) {
+      toast.error("Tài khoản hoặc mật khẩu không chính xác");
       console.log(err);
     } finally {
       setIsLoading(false);
