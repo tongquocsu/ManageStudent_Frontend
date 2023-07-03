@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { toast } from 'react-toastify';
 import { Button ,Input } from 'antd';
+import { useState } from "react";
 
 function index() {
   const [title, setTitle] = useState(["STT","ngày", "nội dung vi phạm", "", ""]);
@@ -16,6 +17,7 @@ function index() {
       desc: "Trốn học tiết toán",
     },
   ]);
+
   const [newId, setNewId] = useState('');
   const [newDay, setNewDay] = useState('');
   const [newContent, setNewContent] = useState('');
@@ -48,7 +50,8 @@ function index() {
     setNewContent(content.desc)
     setEditingRow(content._id)
   };
-  const onClickUpdateContent = () => {
+  const onClickUpdateContent = (items) => {
+   
     let index = statusStudent.findIndex(s =>s._id === editingRow)
     let statusCopy = [...statusStudent];
     statusCopy[index] = {

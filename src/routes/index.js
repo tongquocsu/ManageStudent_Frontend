@@ -8,7 +8,7 @@ import managerClass from '../pages/managerClass'
 import sendLetter from '../pages/sendLetter'
 import inputScore from '../pages/inputScore'
 import classList from '../pages/classList'
-import myProfile from '../pages/myProfile'
+import myProfile from '../pages/myProfile/index.jsx'
 import Home from '../pages/Home'
 
 const publicRoutes = [

@@ -1,5 +1,9 @@
 import { Table } from "antd";
 import {Link } from 'react-router-dom';
+import { DownOutlined, FilterOutlined } from '@ant-design/icons';
+import { Dropdown, Space } from 'antd';
+
+
 const columns = [
     {
         title: 'Thứ hai',
@@ -39,15 +43,67 @@ for(let i = 0; i < 5; i++){
         subject: 'Ngữ Văn',
     });
 }
+const items = [
+    {
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          Tuần này
+        </a>
+      ),
+      key: '0',
+    },
+    {
+        label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+            Tuần trước
+          </a>
+        ),
+        key: '1',
+      },
+    {
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          Tuần sau
+        </a>
+      ),
+      key: '2',
+    },
+    {
+        label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+            Tháng sau
+          </a>
+        ),
+        key: '3',
+      },
+    {
+      type: 'divider',
+    },
+    {
+      label: 'HK sau',
+      key: '3',
+      disabled: true,
+    },
+  ];
 
 function Schedule() {
     return (
         <div>
-            <div className="grid-cols-4 flex my-3">
-                <p className=" mr-8">Lớp: ...</p>
-                <p className="text-[#000] font-bold flex-none w-[430px]">Sỉ số: ....</p>
-                <button className="flex-auto border border-1 py-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Nhập điểm</Link></button>
-                <button className="flex-auto border border-1 px-2 rounded-lg bg-[#515ddd] text-[#fff] mr-3"><Link to="/teacher/inputScore">Gửi Thư mời</Link></button>
+            <div>
+                <Dropdown
+                    menu={{
+                    items,
+                    }}
+                >
+                    <a onClick={(e) => e.preventDefault()}>
+                    <Space className="font-sans mt-3 ml-[60px] border-1 px-3 py-1 rounded-[10px] bg-[#515ddd] text-white">
+                         Bộ Lọc
+                         <FilterOutlined className="top-[20px]" />
+                    </Space>
+                       
+                    
+                    </a>
+                </Dropdown>
             </div>
             <div className="flex">
                 <div className="grid justify-items-center">
