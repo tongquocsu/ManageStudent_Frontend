@@ -82,11 +82,6 @@ const itemsTop = [
 
   getItem("Tạo người dùng", "createUser", <FontAwesomeIcon icon="user-tie" />, [
     getItem(
-      "Học sinh",
-      "createStudent",
-      <FontAwesomeIcon icon="user-graduate" />
-    ),
-    getItem(
       "Giáo viên",
       "createTeacher",
       <FontAwesomeIcon icon="calendar-days" />
@@ -145,7 +140,7 @@ const Sidebar = () => {
       staffSchedule: "/admin/acc-staff/schedule",
       staffClassroom: "/admin/acc-staff/classroom",
       staffSubject: "/admin/acc-staff/subject",
-      createStudent: "/admin/create/student",
+
       createTeacher: "/admin/create/teacher",
       createAccountant: "/admin/create/accountant",
       createAccStaff: "/admin/create/acc-staff",

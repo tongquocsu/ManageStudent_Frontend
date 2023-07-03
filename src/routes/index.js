@@ -13,10 +13,15 @@ import Settings from "../pages/Admin/Settings";
 import Logout from "../pages/Logout";
 import News from "../pages/News";
 import Home from "../pages/Home";
+
 import ManagerStudent from "../pages/Admin/ManageAcademic/ManagerStudent";
 import MangerSchedule from "../pages/Admin/ManageAcademic/MangerSchedule";
 import MangerClassroom from "../pages/Admin/ManageAcademic/MangerClassroom";
 import ManagerSubject from "../pages/Admin/ManageAcademic/ManagerSubject";
+
+import CreateTeacher from "../pages/Admin/CreateUser/CreateTeacher";
+import CreateAccountant from "../pages/Admin/CreateUser/CreateAccountant";
+import CreateAccStaff from "../pages/Admin/CreateUser/CreateAccStaff";
 const routes = [
   {
     path: "/",
@@ -82,6 +87,22 @@ const routes = [
   {
     path: "/admin/acc-staff/subject",
     page: ManagerSubject,
+    isShowHeader: true,
+  },
+
+  {
+    path: "/admin/create/teacher",
+    page: CreateTeacher,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/create/accountant",
+    page: CreateAccountant,
+    isShowHeader: true,
+  },
+  {
+    path: "/admin/create/acc-staff",
+    page: CreateAccStaff,
     isShowHeader: true,
   },
 
