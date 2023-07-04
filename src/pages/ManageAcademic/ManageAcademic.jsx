@@ -8,6 +8,8 @@ import SubjectManage from "../../components/SubjectManage";
 import SchuduleManage from "../../components/ScheduleManage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { handleLogoutRedux } from "../../redux/action/userAction";
 const itemsTop = [
   getItem(
     "Học Sinh",
@@ -28,6 +30,7 @@ const itemsBottom = [
 ];
 function ManageAcademic() {
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const [keySelected, setKeySelected] = useState("");
   const renderPage = (key) => {
     switch (key) {
@@ -50,9 +53,8 @@ function ManageAcademic() {
       setKeySelected(key);
     }
   };
-  const handleLogout = (key) => {
-    console.log(key);
-    localStorage.removeItem("access_token");
+  const handleLogout = () => {
+    dispatch(handleLogoutRedux());
     Navigate("/login");
   };
 

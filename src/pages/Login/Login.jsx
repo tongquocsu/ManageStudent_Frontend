@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/slider/slider.png";
-import { loginUser } from "../../service/userService";
 import Loading from "../../components/Loading";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { handleLoginRedux } from "../../redux/action/userAction";
+
 // eslint-disable-next-line react/prop-types
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,32 +15,25 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const arrImages = [image, image, image];
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const data = await loginUser(email, password);
-      if (data.success && data.account.role == "schoolStaff") {
-        if (data?.token) {
-          Navigate("/manager-academic");
-        }
-        localStorage.setItem("access_token", data.token);
-      } else if (data.success && data.account.role == "Admin") {
-        if (data?.token) {
-          Navigate("/manager-admin");
-        }
-        localStorage.setItem("access_token", data.token);
-      } else if (data.success && data.account.role == "accoutant") {
-        if (data?.token) {
-          Navigate("/manager-accoutant");
-        }
-        localStorage.setItem("access_token", data.token);
+      const dataAccount = await dispatch(handleLoginRedux(email, password));
+      const role = dataAccount.role;
+      setIsLoading(false);
+      if (role === "schoolStaff") {
+        Navigate("/manager-academic");
+      } else if (role === "Admin") {
+        Navigate("/manager-admin");
+      } else if (role === "") {
+        Navigate("/manager-accoutant");
       }
     } catch (err) {
+      setIsLoading(false);
       toast.error("Tài khoản hoặc mật khẩu không chính xác");
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
