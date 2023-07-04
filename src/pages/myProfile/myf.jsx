@@ -128,7 +128,7 @@ function index() {
       <div>
         <Modal isOpen={modal} toggle={toggle} className="w-[900px]">
           <div className="grid justify-items-center">
-            <ModalHeader toggle={toggle} onClick={e => onPressEditingInfo(s)} className="font-bold font-sans">
+            <ModalHeader toggle={toggle} className="font-bold font-sans">
               Chỉnh sửa hồ sơ
             </ModalHeader>
           </div>
