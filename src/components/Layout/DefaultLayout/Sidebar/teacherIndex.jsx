@@ -3,7 +3,6 @@ import { Menu } from 'antd';
 import controlSidebar from '/src/assets/images/controlSidebar.jpg';
 import { 
   AppstoreOutlined, 
-  MailOutlined ,  
   CalendarOutlined,   
   SettingOutlined, 
   LinkOutlined,
@@ -23,7 +22,6 @@ function ParentSidebar() {
         {title: "Thông tin tài khoản", icon:<UserOutlined /> , url: "/teacher/profile"},
         {title: "Danh sách các lớp", icon:<AppstoreOutlined /> , url: "/teacher/classlist"},
         {title: "Xem lịch dạy", icon:<CalendarOutlined /> , url: "/teacher/xemlichday"},
-        {title: "Gửi thư mời", icon:<MailOutlined /> , url: "/teacher/sendLetter"},
         {title: "Đăng Xuất", icon:<ImportOutlined /> , url: "/"},
     ];
     return (

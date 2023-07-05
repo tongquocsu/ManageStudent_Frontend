@@ -4,7 +4,6 @@ import { useState} from "react";
 import controlSidebar from '/src/assets/images/controlSidebar.jpg';
 import { 
   AppstoreOutlined, 
-  MailOutlined ,  
   CalendarOutlined,   
   SettingOutlined, 
   LinkOutlined,
@@ -36,7 +35,6 @@ import {
       getItem('Nhập điểm', '4'),
     ]),
     getItem('Xem lịch dạy', '5', <CalendarOutlined /> ),
-    getItem('Gửi thư mời', '6', <MailOutlined />),
     getItem('Cài đặt', '7', <SettingOutlined/>),
     getItem('Đăng Xuất', '8', <ImportOutlined />),
     
@@ -71,7 +69,6 @@ import {
         3: "/teacher/classlist",
         4: "/teacher/inputScore",
         5: "/teacher/xemlichday",
-        6: "/teacher/sendLetter",
         8: "/",
       };
     

@@ -1,91 +1,112 @@
-import { Table , Button } from "antd";
+import React, { useState, useEffect } from "react";
+import {  EyeOutlined, EditOutlined} from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import { Component } from "react";
+import { Table , Button} from 'antd';
+import env from '/env.json';
 import axios from "axios";
-import {EyeOutlined} from '@ant-design/icons';
 
-// const {Column} = Table
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "siso",
-    dataIndex: "classEnrollment",
-    key: "classEnrollment",
-  },
-  {
-    title: "action",
-    key: "action",
-    render: (_, record) => (
-      <div size="middle">
-        <Button><Link to="/"> <EyeOutlined /> </Link></Button>
-      </div>
-    ),
-  },
-];
-class index extends Component {
-  state = {
-    classList: [],
+
+function index() {
+  const [className, setClassName]= useState([]);
+  useEffect(() => {
+      axios.get(`${env.api}/class/class-list`)
+      .then((res) => {
+          setClassName(res.data.classes)
+      }).catch(err => {
+          console.log(err)
+      })
+  }, []);
+ 
+  const sharedOnCell = (_, index) => {
+    if (index === 1) {
+      return {
+        colSpan: 1,
+      };
+    }
+    return {};
   };
 
-  componentDidMount() {
-    axios
-      .get(`http://127.0.0.1:3002/api/v1/class/class-list/`)
-      .then((res) => {
-        const classList = res.data.classes;
-        this.setState({ classList });
-        console.log(classList);
-      })
-      .catch((error) => console.log(error));
-  }
+  // const [getCount, setCount] = useState(0);
 
-  render() {
-    return (
-      <div className="w-full">
-        <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">
-          Danh sách các lớp
-        </h2>
-        <Table
-          dataSource={this.state.classList}
-          columns={columns}
-          pagnination={false}
-          bordered
-          className="border-1 mt-6 rounded-lg border-[#515ddd] "
-        />
-      </div>
-    );
-  }
+  // if(className.map((t) => <span key={t._id}> {t.name}</span>)){
+  //   setCount( getCount +1);
+  //   console.log(setCount);
+  // }
+
+  const columns = [
+    {
+      title: 'STT',
+      key: 'STT',
+      render: (_, record, index) => index +1,
+    },
+    {
+      title: 'Tên Lớp',
+      dataIndex: 'name',
+      render: (text) => <a>{text}</a>,
+      onCell: (_, index) => ({
+        colSpan: index === 1 ? 1 : 1,
+      }),
+    },
+    {
+      title: 'Sỉ số',
+      dataIndex: 'classEnrollment',
+      onCell: sharedOnCell,
+    },
+    {
+      title: 'Nhập điểm',
+      onCell: sharedOnCell,
+      render: (_, record) => (
+        <div size="middle">
+          <Button><Link to={`/teacher/inputScore/${record._id}`}> <EditOutlined /> </Link></Button>
+        </div>
+      ),
+    },
+    {
+      title: 'Gửi thư mời',
+      onCell: sharedOnCell,
+      render: (_, record) => (
+        <div size="middle">
+          <Button><Link to={`/teacher/sendLetter/${record._id}`}> <EditOutlined /> </Link></Button>
+        </div>
+      ),
+    },
+    {
+      title: 'Giáo viên chủ nhiệm',
+      onCell: sharedOnCell,
+      
+    },
+    {
+      title: 'Action',
+      onCell: sharedOnCell,
+      render: (_, record) => (
+        <div size="middle">
+          <Button><Link to={`/teacher/managerClass/${record._id}`} > <EyeOutlined /> </Link></Button>
+        </div>
+      ),
+    },
+  ];
+  
+  return (
+    <div>
+    <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Danh sách các lớp</h2>
+       <Table className="w-[780px] mt-3" columns={columns}  dataSource={className} bordered />
+      {/* <h2>{getCount}</h2> */}
+    </div>
+  )
 }
 
-// const dataSource = [
-//   {
-//     key: '1',
-//     stt: '1',
-//     name: <Link to="/teacher/managerClass">6A</Link>,
-//     score: <Link to="/teacher/inputScore"><i className="fa-solid fa-pencil"></i></Link>,
-//     sl: '24',
-//     GVCN: 'Ngô Minh Tuấn'
-//   },
-//   {
-//     key: '2',
-//     stt: '2',
-//     name:  <Link to="/quanlylop">6B</Link>,
-//     score:  <Link to="/teacher/inputScore"><i className="fa-solid fa-pencil"></i></Link>,
-//     sl: '40',
-//     GVCN: 'Hà Thị Minh Tuyết',
-//   },
-//   {
-//     key: '3',
-//     stt: '3',
-//     name:  <Link to="/quanlylop">6C</Link>,
-//     score: <i className="fa-solid fa-pencil"></i>,
-//     sl: '40',
-//     GVCN: 'Dương Văn Nam',
-//   },
+export default index
 
-// ];
 
-export default index;
+
+
+
+
+
+
+
+{/* {className.map((t) => <span key={t._id}> {t.name}</span>)}  */}
+ {/* <Columns title="STT" ></Columns>
+        <Columns title="Tên lớp" dataIndex=""></Columns>
+        <Columns title="Sỉ số"></Columns>
+        <Columns title="action" dataIndex = {<Link> <EyeOutlined /></Link> }> d</Columns>  */}

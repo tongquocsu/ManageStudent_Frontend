@@ -7,7 +7,7 @@ function SearchInput({ onSearch, placeholder }) {
   };
 
   return (
-    <div className="flex items-center border-2 px-2 rounded py-1 border-black ">
+    <div className="flex items-center border-2 px-2 rounded py-1 border-[#515ddd] ">
     <SearchOutlined className="pr-1"/> 
       <input type="text" placeholder={placeholder} onChange={handleInputChange} className="focus:outline-none " />
     </div>

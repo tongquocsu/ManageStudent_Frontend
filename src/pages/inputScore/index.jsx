@@ -1,33 +1,54 @@
 import {Table, Button} from 'antd';
 import { useNavigate  } from 'react-router';
+import env from '/env.json';
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
-const {Column} = Table  
-const tableDate = [
-  {
-    key: '1',
-    STT: '1',
-    nameStudent: 'Trịnh Nhã An',
-    score: '5',
-    typeScore: 'Điểm 15p',
-    edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
-  },
-  {
-    key: '2',
-    STT: '2',
-    nameStudent: 'Trần Minh Tuấn',
-    score: '9',
-    typeScore: 'Điểm 15p',
-    edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
-  },
-  {
-    key: '3',
-    STT: '3',
-    nameStudent: 'Trần Minh Anh',
-    score: '6.5',
-    typeScore: 'Điểm 15p',
-    edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
-  },
-];
+  const {Column} = Table  
+  const tableDate = [
+    {
+      key: '1',
+      STT: '1',
+      nameStudent: 'Trịnh Nhã An',
+      score: '5',
+      typeScore: 'Điểm 15p',
+      edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
+    },
+    {
+      key: '2',
+      STT: '2',
+      nameStudent: 'Trần Minh Tuấn',
+      score: '9',
+      typeScore: 'Điểm 15p',
+      edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
+    },
+    {
+      key: '3',
+      STT: '3',
+      nameStudent: 'Trần Minh Anh',
+      score: '6.5',
+      typeScore: 'Điểm 15p',
+      edit: <i className="fa-solid fa-floppy-disk text-[#ffff00]"></i>,
+    },
+  ];
+
+  // const { id } = useParams()
+  // console.log(id);
+  // const [getScore, setScore] = useState('');
+  // useEffect(()=> {
+  //   axios.get(`${env.api}/teacher/inputScore/`${id})
+  //   .then((res) => {
+  //     setScore(res.data)
+
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // },[])
+
+
+
 function index() {
   let navigate = useNavigate()
   const handleBackData = () =>{
