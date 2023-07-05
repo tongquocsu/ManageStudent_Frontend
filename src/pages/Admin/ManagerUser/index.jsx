@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import { toast } from "react-toastify";
 import { Form, Input, Select, Modal } from "antd";
 const { Option } = Select;
@@ -8,6 +8,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Sidebar from "../../../components/Sidebar";
 import TableItem from "../../../components/TableItem";
 import ModalItem from "../../../components/ModalItem";
+import { getAllUser } from "../../../services/User";
 
 const ManagerUser = () => {
   const [data, setData] = useState([]);
@@ -19,22 +20,33 @@ const ManagerUser = () => {
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [listUser, setListUser] = useState([]);
 
   useEffect(() => {
     // Initialize the data array
     const initialData = [];
-    for (let i = 0; i < 100; i++) {
-      const id = uuidv4(); // Generate a UUID as a random ID
+    listUser.map((user) => {
       initialData.push({
-        key: id,
-        fullname: `Nguyen Van ${i}`,
-        email: `test@gmail${i}.com`,
-        phone: `09999999${i}`,
-        role: "User",
-        address: `Address${i}`,
+        key: user._id,
+        fullname: user.username,
+        email: user.email,
+        phone: "",
+        role: user.role,
+        address: "",
       });
-    }
+    });
+    console.log("listUser: ", initialData);
+
     setData(initialData);
+  }, []);
+
+  const getAllUserData = async () => {
+    const response = await getAllUser();
+    setListUser(response.accounts);
+    // console.log("data : ", response);
+  };
+  useEffect(() => {
+    getAllUserData();
   }, []);
 
   useEffect(() => {
