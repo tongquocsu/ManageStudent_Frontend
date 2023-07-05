@@ -25,10 +25,12 @@ function Login() {
       setIsLoading(false);
       if (role === "schoolStaff") {
         Navigate("/manager-academic");
-      } else if (role === "Admin") {
+      } else if (role === "admin") {
         Navigate("/manager-admin");
       } else if (role === "") {
         Navigate("/manager-accoutant");
+      }else if (role === "parent") {
+        Navigate("/parent/parent-info");
       }
     } catch (err) {
       setIsLoading(false);

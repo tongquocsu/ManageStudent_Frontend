@@ -1,0 +1,14 @@
+:where(.css-dev-only-do-not-override-12jzuas).ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    position: absolute;
+    right: -15px;
+}
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-btn-default:not(:disabled):hover {
+    color: white;
+    border-color: white;
+}
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-btn-default:not(:disabled).cancel:hover {
+    color: black;
+    border-color: black;
+}
