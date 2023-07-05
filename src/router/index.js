@@ -11,7 +11,7 @@ const routes = [
     { path: "/parent/infringement", page: Infringement, isShowHeader: true, },
     { path: "/parent/school-fee", page: SchoolFee, isShowHeader: true, },
     { path: "/parent/schedule", page: Schedule, isShowHeader: true, },
-    { path: "/parent/parent-info", page: ParentInfo, isShowHeader: true, },
+    { path: "/parent/parent-info/:pid", page: ParentInfo, isShowHeader: true, },
     { path: "/parent/transcript", page: Transcript, isShowHeader: true, },
     { path: "/parent/meeting", page: ParentMeeting, isShowHeader: true, },
 ];

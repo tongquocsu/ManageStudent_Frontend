@@ -6,6 +6,8 @@ import Loading from "../../components/Loading";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { handleLoginRedux } from "../../redux/action/userAction";
+import axios from "axios";
+import { fetchAllParent } from "../../service/parentService";
 
 // eslint-disable-next-line react/prop-types
 function Login() {
@@ -16,7 +18,23 @@ function Login() {
   const arrImages = [image, image, image];
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  //Get id
+  const [value, setValue] = useState([{}])
+  
+  useEffect(() => {
+    getParent();
+  }, [])
 
+  const getParent = async () => {
+    let res = await fetchAllParent();
+    if(res && res.data && res.data.parents){
+      setValue(res.data.parents)
+    }
+  }
+  // console.log(value[0]);
+  // console.log(value.length);
+  
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
@@ -30,7 +48,12 @@ function Login() {
       } else if (role === "") {
         Navigate("/manager-accoutant");
       }else if (role === "parent") {
-        Navigate("/parent/parent-info");
+        for(let i = 0; i < value.length; i++){
+          if(value[i].person.account == dataAccount.accountId){
+            Navigate("/parent/parent-info/"+value[i]._id);
+          }
+        }
+        // console.log(dataAccount.accountId)
       }
     } catch (err) {
       setIsLoading(false);
@@ -38,6 +61,7 @@ function Login() {
       console.log(err);
     }
   };
+
 
   useEffect(() => {
     const handleResize = () => {

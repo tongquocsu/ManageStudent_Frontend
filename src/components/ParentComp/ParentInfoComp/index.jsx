@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import UpdateParentComp from '../UpdateParentComp'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
-
+ 
 function ParentInfoComp(){
     const [modal, setModal] = useState(false);
 
@@ -33,19 +33,29 @@ function ParentInfoComp(){
         }
         return e?.fileList;
     };
-    const {id} = useParams();
+    const id = useParams();
+
     const [getParent, setGetParent] = useState([{}])
 
+    // useEffect(() => {
+    //     axios.get('http://localhost:3002/api/v1/parent/detail/'+id.pid)
+    //     .then(
+    //         response => response.json()
+    //     ).catch(err => console.log(err))
+    //     .then(
+    //         data => {
+    //             setGetParent(data)
+    //         }
+    //     )
+    // }, [])
     useEffect(() => {
-        axios.get("http://localhost:3002/api/v1/parent/detail/649548043ae080109a9ff752")
-        .then(res => console.log(res))
-        // .then(
-        //     data => {
-        //         setGetParent(data)
-        //     }
-        // )
+        axios.get('http://localhost:3002/api/v1/parent/detail/'+id.pid)
+        .then(
+            res => {
+                setGetParent(res.data)
+            }
+        ).catch(err => console.log(err))
     }, [])
-
     return (
         <>
             <h2 className="m-4 text-center text-base font-bold">Thông tin tài khoản</h2>
