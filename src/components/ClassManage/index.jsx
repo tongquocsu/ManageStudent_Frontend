@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined, DownOutlined } from "@ant-design/icons";
 import TableComponent from "../TableItem";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { useEffect, useState } from "react";
 import ModalComponent from "../ModalComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -8,10 +8,15 @@ import { toast } from "react-toastify";
 import Loading from "../Loading";
 import _ from "lodash";
 import SearchInput from "../SearchInput";
+import { getAllClassRedux } from "../../redux/action/classReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { addClassApi } from "../../service/classService";
+import { getAllSchoolRedux } from "../../redux/action/schoolAction";
+import { Option } from "antd/es/mentions";
 function ClassManage() {
   const [listItemClass, setListItemClass] = useState([]);
   const [itemOption, setItemOption] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("10");
+  const [selectedClass, setSelectedClass] = useState("");
   const [isShowOption, setIsShownOption] = useState(false);
   const [Class, setClass] = useState("");
   const [room, setRoom] = useState("");
@@ -22,10 +27,17 @@ function ClassManage() {
   const [isModalAdd, setIsModalAdd] = useState(false);
   const [isModalDeleted, setIsModalDeleted] = useState(false);
   const [addClass, setAddClass] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [deleteClass, setDeleteClass] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [optionSchool, setOptionSchool] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState(null);
+  const dispatch = useDispatch();
+  const tokenUser = useSelector((state) => state.user.account.token);
+  const dataClass = useSelector((state) => state.class.ListClass);
+  const isLoading = useSelector((state) => state.class.isLoading);
+  const dataSchool = useSelector((state) => state.school.ListSchool);
+  console.log(dataSchool);
   const renderAction = (text, classItem) => {
     return (
       <div>
@@ -77,29 +89,37 @@ function ClassManage() {
       render: renderAction,
     },
   ];
+  const getAllSchool = async () => {
+    dispatch(getAllSchoolRedux(tokenUser));
+  };
+  useEffect(() => {
+    getAllSchool();
+  }, []);
+  const getListClass = async () => {
+    try {
+      await dispatch(getAllClassRedux(tokenUser));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getListClass();
+  }, [listItemClass]);
+
+  useEffect(() => {
+    setOptionSchool(dataSchool);
+  }, []);
 
   const data = [];
-  const usedRooms = [];
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 10; j < 13; j++) {
-      let room = "";
-      for (let k = 0; k < i + 1; k++) {
-        if (!usedRooms.includes(`P${k}`)) {
-          room = `P${k}`;
-          usedRooms.push(room);
-          break;
-        }
-      }
-      data.push({
-        key: `${i}+${j}`,
-        id: `${i}`,
-        room: room,
-        Class: `${j}A${i + 1}`,
-        grade: `${j}`,
-      });
-    }
-  }
+  dataClass?.map((item) => {
+    data.push({
+      key: item._id,
+      id: item._id,
+      room: "",
+      Class: item.name,
+      grade: item.gradeLevel,
+    });
+  });
 
   const uniqueClasses = [...new Set(data.map((item) => item.grade))];
 
@@ -132,27 +152,32 @@ function ClassManage() {
     return uuidv4();
   };
   const handleAddClass = (Class) => {
-    console.log(Class);
     setAddClass(Class);
     setIsModalAdd(true);
   };
-
-  const handleAddSubmit = () => {
+  const handleAddSubmit = async () => {
     let sstItem = filteredData.length;
     const values = formInstance.getFieldsValue();
+    console.log("checkvl", values)
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
     const newStudent = {
       id: generateUniqueId(),
       sst: sstItem + 1,
-      room: values.room,
-      Class: values.Class,
-      grade: values.grade,
+      name: values.Class,
+      gradeLevel: values.grade,
+      classYear: currentYear.toString(),
+      classEnrollment: 50,
+      school: values.school,
     };
-    setListItemClass([...listItemClass, newStudent]);
+    const res = await addClassApi(newStudent);
+    console.log("checkađ", res);
+    setListItemClass([...listItemClass, res]);
     setIsModalAdd(false);
-    setIsLoading(true);
+    // setIsLoading(true);
     formInstance.resetFields();
-    toast.success("Tạo học sinh thành công!");
-    setIsLoading(false);
+    toast.success("Tạo học lớp thành công!");
+    // setIsLoading(false);
   };
   const handleEditSubmit = () => {
     const values = formInstance.getFieldsValue();
@@ -163,11 +188,12 @@ function ClassManage() {
       cloneListClass[index].room = values.room;
       cloneListClass[index].Class = values.Class;
       cloneListClass[index].grade = values.grade;
+      cloneListClass[index].school = values.school;
       setListItemClass(cloneListClass);
-      setIsLoading(true);
+      // setIsLoading(true);
       setIsModalEdit(false);
       toast.success("Cập nhật thành công");
-      setIsLoading(false);
+      // setIsLoading(false);
       formInstance.resetFields();
     }
   };
@@ -186,11 +212,11 @@ function ClassManage() {
         (s) => s.id !== deleteClass.id
       );
       setListItemClass(updatedListClass);
-      setIsLoading(true);
+      // setIsLoading(true);
       setIsModalDeleted(false);
       setDeleteClass(null);
       toast.success("Xóa thành công!");
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -208,6 +234,10 @@ function ClassManage() {
     });
     setSearchResults(filterSearch);
   }, [searchValue]);
+
+  const handleSchoolChange = (value, item) => {
+    setSelectedSchool({ id: value, name: item.children });
+  };
   return (
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
@@ -303,6 +333,24 @@ function ClassManage() {
             ]}
           >
             <Input value={grade} onChange={(e) => setGrade(e.target.value)} />
+          </Form.Item>
+          <Form.Item
+            label="Trường"
+            name="school"
+            rules={[
+              {
+                required: true,
+                message: "Không được để trống!",
+              },
+            ]}
+          >
+            <Select value={selectedSchool?.id} onChange={handleSchoolChange}>
+              {optionSchool.map((item, index) => (
+                <Option key={index} value={item._id}>
+                  {item.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
             <Button
