@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import image from "../../assets/slider/slider.png";
 import Loading from "../../components/Loading";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleLoginRedux } from "../../redux/action/userAction";
-
 // eslint-disable-next-line react/prop-types
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +15,8 @@ function Login() {
   const arrImages = [image, image, image];
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const token = useSelector((state) => state.user.account?.token);
+  console.log(token);
   const handleSubmit = async () => {
     try {
       setIsLoading(true);

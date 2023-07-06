@@ -13,7 +13,7 @@ export const handleLoginRedux = (email, password) => {
       if (res && res.token) {
         dispatch({
           type: Type.LOGIN_USER_SUCCESS,
-          data: res.account,
+          data: res,
         });
         localStorage.setItem("access_token", res.token);
         return res.account;
