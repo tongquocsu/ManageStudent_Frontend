@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/images/slider.png";
-import { loginUser } from "../../services/userService.js";
+import { loginUser } from "../../services/User";
 import Loading from "../../components/Loading";
 
 // eslint-disable-next-line react/prop-types
@@ -26,7 +26,7 @@ function Login() {
       } else if (data.success && data.account.role == "admin") {
         if (data?.token) {
           Navigate("/admin/manager-user");
-          console.log("Chuyen trang");
+          console.log("token", data.token);
         }
         localStorage.setItem("access_token", data.token);
       } else if (data.success && data.account.role == "accoutant") {

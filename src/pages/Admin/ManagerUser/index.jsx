@@ -21,33 +21,37 @@ const ManagerUser = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [listUser, setListUser] = useState([]);
+  const [isData, setIsData] = useState(false);
 
   useEffect(() => {
     // Initialize the data array
+    const getAllUserData = async () => {
+      const response = await getAllUser();
+      setListUser(response);
+      // console.log("data: ", response);
+      console.log("listUser: ", listUser);
+      setIsData(true);
+    };
+    if (!isData) {
+      getAllUserData();
+    }
+
     const initialData = [];
     listUser.map((user) => {
       initialData.push({
         key: user._id,
-        fullname: user.username,
-        email: user.email,
-        phone: "",
-        role: user.role,
-        address: "",
+        fullname: user.name,
+        gender: user.gender ?? user.gender == true ? "Nam" : "Nữ",
+        dateOfBirth: formatDate(user.dateOfBirth),
+        email: user.account.email,
+        phone: user.mobileNumber,
+        role: user.account.role,
+        address: user.address,
       });
     });
-    console.log("listUser: ", initialData);
-
     setData(initialData);
-  }, []);
-
-  const getAllUserData = async () => {
-    const response = await getAllUser();
-    setListUser(response.accounts);
-    // console.log("data : ", response);
-  };
-  useEffect(() => {
     getAllUserData();
-  }, []);
+  }, [isData]);
 
   useEffect(() => {
     // Update the form values when the selectedUser changes
@@ -55,7 +59,14 @@ const ManagerUser = () => {
       formRef.current?.setFieldsValue({ user: { ...selectedUser } });
     }
   }, [selectedUser]);
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
 
+    return `${day}-${month}-${year}`;
+  };
   const renderAction = (text, user) => {
     return (
       <div>
@@ -78,10 +89,19 @@ const ManagerUser = () => {
       </div>
     );
   };
+
   const columns = [
     {
       title: "Họ và tên",
       dataIndex: "fullname",
+    },
+    {
+      title: "Giới tính",
+      dataIndex: "gender",
+    },
+    {
+      title: "Năm sinh",
+      dataIndex: "dateOfBirth",
     },
     {
       title: "Email",
@@ -167,10 +187,11 @@ const ManagerUser = () => {
     setSearchQuery(e.target.value);
   };
   const filteredData = data.filter((user) => {
-    const { fullname, email, phone, role } = user;
+    const { fullname, gender, email, phone, role } = user;
     const searchValue = searchQuery.toLowerCase();
     return (
       fullname.toLowerCase().includes(searchValue) ||
+      gender.toLowerCase().includes(searchValue) ||
       email.toLowerCase().includes(searchValue) ||
       phone.toLowerCase().includes(searchValue) ||
       role.toLowerCase().includes(searchValue)
@@ -269,6 +290,52 @@ const ManagerUser = () => {
                 }}
               />
             </Form.Item>
+            <Form.Item
+              name={["user", "gender"]} // Update the name to match the field name
+              label="Giới tính"
+              rules={[
+                {
+                  required: true,
+                  message: "Không được để trống!",
+                },
+              ]}
+            >
+              <Input
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFormValues((prevValues) => ({
+                    ...prevValues,
+                    user: {
+                      ...prevValues.user,
+                      gender: value,
+                    },
+                  }));
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              name={["user", "dateOfBirth"]} // Update the name to match the field name
+              label="Năm sinh"
+              rules={[
+                {
+                  required: true,
+                  message: "Không được để trống!",
+                },
+              ]}
+            >
+              <Input
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFormValues((prevValues) => ({
+                    ...prevValues,
+                    user: {
+                      ...prevValues.user,
+                      dateOfBirth: value,
+                    },
+                  }));
+                }}
+              />
+            </Form.Item>
 
             <Form.Item
               name={["user", "email"]}
@@ -337,11 +404,22 @@ const ManagerUser = () => {
                   }));
                 }}
               >
-                <Option value="User">User</Option>
-                <Option value="Admin">Admin</Option>
-                <Option value="Giáo viên">Giáo viên</Option>
-                <Option value="Kế toán">Kế toán</Option>
-                <Option value="Quản lý học vụ">Quản lý học vụ</Option>
+                <Option value={listUser.account?.role == "student"}>
+                  Học sinh
+                </Option>
+                <Option value={listUser.account?.role == "admin"}>Admin</Option>
+                <Option value={listUser.account?.role == "teacher"}>
+                  Giáo viên
+                </Option>
+                <Option value={listUser.account?.role == "accountant"}>
+                  Kế toán
+                </Option>
+                <Option value={listUser.account?.role == "parent"}>
+                  Phụ huynh
+                </Option>
+                <Option value={listUser.account?.role == "schoolAdmin"}>
+                  Quản lý học vụ
+                </Option>
               </Select>
             </Form.Item>
             <Form.Item

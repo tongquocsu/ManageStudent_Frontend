@@ -8,7 +8,7 @@ export const loginUser = async (emailOrUsername, password) => {
 };
 
 export const getAllUser = async (access_token) => {
-  const res = await axios.get("/user-account/list", {
+  const res = await axios.get("/person/list", {
     headers: {
       token: `Beerer ${access_token}`,
     },
