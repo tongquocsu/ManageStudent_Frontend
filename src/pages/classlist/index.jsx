@@ -87,14 +87,20 @@ function index() {
       ),
     },
   ];
-  
+  if(className.length > 0){
+    return (
+        <div>
+        <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Danh sách các lớp</h2>
+          <Table className="w-[780px] mt-3 " columns={columns}  dataSource={className} bordered />
+        </div>
+      )
+  }
   return (
     <div>
-    <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Danh sách các lớp</h2>
-       <Table className="w-[780px] mt-3 " columns={columns}  dataSource={className} bordered />
-      {/* <h2>{getCount}</h2> */}
+      <p>Không tìm thấy dữ liệu lớp!</p>
     </div>
   )
+ 
 }
 
 export default index
