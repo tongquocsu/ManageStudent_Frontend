@@ -33,20 +33,7 @@ import React, { useState, useEffect } from "react";
     },
   ];
 
-  // const { id } = useParams()
-  // console.log(id);
-  // const [getScore, setScore] = useState('');
-  // useEffect(()=> {
-  //   axios.get(`${env.api}/teacher/inputScore/`${id})
-  //   .then((res) => {
-  //     setScore(res.data)
-
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // },[])
-
+ 
 
 
 function index() {
@@ -54,9 +41,23 @@ function index() {
   const handleBackData = () =>{
     navigate('/teacher/classlist');
   }
+
+  const { id } = useParams()
+  console.log(id);
+  const [getScore, setScore] = useState('');
+  useEffect(()=> {
+    axios.get(`${env.api}/class/class-detail/${id}`)
+    .then((res) => {
+      setScore(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  },[])
+
   return (
     <div>
-    <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Nhập điểm lớp</h2>
+    <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Nhập điểm lớp {getScore.name} </h2>
       <Table className="border-1 w-[780px] mt-6 rounded-lg border-[#515ddd]" dataSource={tableDate} pagnination={false} bordered>
         <Column className="text-center w-1/12" title="STT" dataIndex="STT"/> 
         <Column className="text-center w-4/12" title="Họ và Tên" dataIndex="nameStudent" />

@@ -16,6 +16,10 @@ function index() {
           console.log(err)
       })
   }, []);
+
+
+  // console.log(className[0].teacher)
+  
  
   const sharedOnCell = (_, index) => {
     if (index === 1) {
@@ -25,13 +29,6 @@ function index() {
     }
     return {};
   };
-
-  // const [getCount, setCount] = useState(0);
-
-  // if(className.map((t) => <span key={t._id}> {t.name}</span>)){
-  //   setCount( getCount +1);
-  //   console.log(setCount);
-  // }
 
   const columns = [
     {
@@ -73,7 +70,12 @@ function index() {
     {
       title: 'Giáo viên chủ nhiệm',
       onCell: sharedOnCell,
-      
+       render: (_, record) => {
+          if(record.teacher) {
+            return (<div>{record.teacher?.person?.name}</div>)
+          }
+          return (<div>Ahihi</div>)
+       }
     },
     {
       title: 'Action',
@@ -89,7 +91,7 @@ function index() {
   return (
     <div>
     <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">Danh sách các lớp</h2>
-       <Table className="w-[780px] mt-3" columns={columns}  dataSource={className} bordered />
+       <Table className="w-[780px] mt-3 " columns={columns}  dataSource={className} bordered />
       {/* <h2>{getCount}</h2> */}
     </div>
   )

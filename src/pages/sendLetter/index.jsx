@@ -23,21 +23,21 @@ function index() {
   }, []);
   const currentYear = new Date().getFullYear();
   return (
-    <div className="ml-[10px] ">
-      <div>
-          <div className="flex flex-col w-12/12 items-center mt-[30px]">
+    <div>
+      <div className="lg:ml-[10px] md:ml-[2px] border my-3 rounded-lg">
+          <div className="flex flex-col w-12/12 items-center mt-[30px] md:text-xs lg:text-base">
             <p>Cộng hoà xã hội chủ nghĩa việt nam </p>
             <p> Độc lập - Tự do - Hạnh phúc</p> 
-            <h2 className="letter-name font-bold text-[18px] my-5">Thư mời họp phụ huynh</h2>
+            <h2 className="letter-name font-bold lg:text-[18px] md:text-[14px] text-[#222222] my-5">Thư mời họp phụ huynh</h2>
           </div>
 
-          <div className="pl-[70px] leading-8">
+          <div className="lg:px-[50px] md:px-[30px] sm:px-[20px] leading-8">
             <p>Kính gửi phụ huynh em:    </p>
-            <p>Học sinh lớp: <span className="font-bold text-[#000]">{getClass.name}</span></p>
+            <p>Học sinh lớp: <span className="font-bold text-[#222222]">{getClass.name}</span></p>
             <p>Thời gian họp vào lúc: <TimePicker defaultValue={dayjs('12:08', format)} format={format} /> </p>
-            <p>Đến tại hội trường của trường THCS: <span className="font-bold text-[#000]">{getClass.school}</span> </p>
-            <p>Để thông báo tới quý phụ huynh kết quả 
-            học tập  và rèn luyện của học sinh năm <span className="font-bold text-[#000]">{currentYear}</span> </p>
+            <p>Đến tại hội trường của trường THCS: <span className="font-bold text-[#222222]">{getClass.school}</span> </p>
+            <p className="whitespace-normal">Để thông báo tới quý phụ huynh kết quả 
+            học tập  và rèn luyện của học sinh năm <span className="font-bold text-[#222222]">{currentYear}</span> </p>
             <p>Rất mong quý phụ huynh tham dự đúng giờ <br/>  Xin trân trọng cảm ơn. </p>
           </div>
 
