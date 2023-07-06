@@ -8,10 +8,12 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import SearchInput from "../SearchInput";
+import { getListStudent } from "../../service/schoolStaff";
+import { useSelector } from "react-redux";
 function StudentManage() {
   const [itemOption, setItemOption] = useState([]);
   const [isShowOption, setIsShownOption] = useState(false);
-  const [selectedClass, setSelectedClass] = useState("10A1");
+  const [selectedClass, setSelectedClass] = useState("");
   const [listUser, setListUser] = useState([]);
   const formInstance = Form.useForm()[0];
   const [fullName, setFullName] = useState("");
@@ -22,14 +24,16 @@ function StudentManage() {
   const [isLoading, setIsLoading] = useState(false);
   const [edituser, setEdituser] = useState(null);
   const [adduser, setAdduser] = useState(null);
-
   // eslint-disable-next-line no-unused-vars
+  const [listStudent, setListStudent] = useState([]);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalAdd, setIsModalAdd] = useState(false);
   const [isModalDeleted, setIsModalDeleted] = useState(false);
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [listUserSearch, setListUserSearch] = useState([]);
+  const listClass = useSelector((state) => state.class.ListClass);
+  console.log("listClass", listClass);
   const renderAction = (text, user) => {
     return (
       <div>
@@ -64,7 +68,7 @@ function StudentManage() {
     { title: "ID", dataIndex: "id" },
     {
       title: "STT",
-      dataIndex: "sst",
+      dataIndex: "stt",
       sorter: (a, b) => a.sst - b.sst,
     },
     {
@@ -94,24 +98,35 @@ function StudentManage() {
       render: renderAction,
     },
   ];
-  const data = [];
-  for (let i = 0; i < 10; i++) {
-    for (let j = 1; j < 7; j++) {
-      data.push({
-        key: `${i}`,
-        id: `${i}`,
-        sst: `${i}`,
-        fullName: `Nguyễn Văn ${i + 1}`,
-        Class: `10A${j}`,
-        gender: "Male",
-        dateOfBirth: `${i + 1} / ${i + 1} / 2001`,
-        address: "Cần Thơ",
-      });
+  const getAllStudent = async () => {
+    try {
+      const access_token = localStorage.getItem("access_token");
+      const response = await getListStudent(access_token);
+      const students = response.students;
+      setListStudent(students);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+  useEffect(() => {
+    getAllStudent();
+  }, []);
 
-  const uniqueClasses = [...new Set(data.map((item) => item.Class))];
-
+  const data = [];
+  listStudent.map((item) => {
+    const klass = listClass.find((classItem) => classItem._id === item.klass);
+    data.push({
+      key: item._id,
+      sst: "",
+      fullName: item.person.name,
+      Class: klass.name,
+      gender: item.person.gender,
+      dateOfBirth: item.person.dateOfBirth,
+      address: item.person.address,
+    });
+  });
+  const uniqueClasses = listClass.map((item) => item.name);
+  
   const menuItems = uniqueClasses.map((classItem, index) => ({
     key: `option${index + 1}`,
     title: classItem,
@@ -221,7 +236,10 @@ function StudentManage() {
     <div>
       <div className="flex items-center justify-between mx-10 my-2">
         <div className="relative">
-         <div className="flex items-center"> Lớp: {selectedClass} <DownOutlined onClick={handletoggle} /></div>
+          <div className="flex items-center">
+            {" "}
+            Lớp: {selectedClass} <DownOutlined onClick={handletoggle} />
+          </div>
           {isShowOption && (
             <ul
               className="absolute z-10 bg-white text-center rounded-sm w-[100px] shadow min-h-[120px] overflow-y-auto"
