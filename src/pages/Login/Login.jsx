@@ -15,19 +15,18 @@ function Login() {
   const arrImages = [image, image, image];
   const Navigate = useNavigate();
 
-
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
       const data = await loginUser(email, password);
       if (data.success && data.account.role == "schoolStaff") {
         if (data?.token) {
-          Navigate("/manager-academic");
+          Navigate("/");
         }
         localStorage.setItem("access_token", data.token);
-      } else if (data.success && data.account.role == "Admin") {
+      } else if (data.success && data.account.role == "teacher") {
         if (data?.token) {
-          Navigate("/manager-admin");
+          Navigate("/");
         }
         localStorage.setItem("access_token", data.token);
       } else if (data.success && data.account.role == "accoutant") {
@@ -72,7 +71,7 @@ function Login() {
                   : " w-full flex flex-col mx-auto items-center justify-center"
               }
             >
-              <div className="text-3xl font-bold">
+              <div className="text-2xl font-bold">
                 Xin chào mừng đến với MyApp
               </div>
               <div className="text-[60px] font-[600] my-4">Đăng nhập</div>
@@ -118,8 +117,8 @@ function Login() {
               <button
                 className={
                   showSlider
-                    ? "mx-auto h-12 rounded-md text-white bg-black hover:opacity-80 w-2/3"
-                    : "mx-auto h-12 rounded-md text-white bg-black hover:opacity-80 w-full"
+                    ? "mx-auto h-10 rounded-md text-white bg-black hover:opacity-80 w-2/3"
+                    : "mx-auto h-10 rounded-md text-white bg-black hover:opacity-80 w-full"
                 }
                 onClick={handleSubmit}
               >

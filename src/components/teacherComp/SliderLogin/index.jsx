@@ -7,7 +7,7 @@ function onChange() {
 
 function Slider(props) {
     const contentStyle = {
-        height: "80vh",
+        height: "70vh",
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
@@ -23,7 +23,7 @@ function Slider(props) {
                     <div key={index}>
                         <div style={contentStyle}>
                             <img
-                                className=" flex flex-col items-center justify-center object-cover w-[80%]"
+                                className="flex flex-col items-center justify-center object-cover w-[80%]"
                                 src={image}
                                 alt={`Slider ${index + 1}`}
                             />
@@ -31,11 +31,10 @@ function Slider(props) {
                     </div>
                 ))}
             </Carousel>
-            <span className="text-[28px] font-[600] flex justify-center">
+            <span className="text-[26px] font-[600] flex justify-center">
         “Học, học nữa, học mãi”
       </span>
-            <br />
-            <span className="text-[28px] font-[600] flex justify-center">
+            <span className="text-[26px] font-[600] flex justify-center">
         - Lenin
       </span>
         </div>
