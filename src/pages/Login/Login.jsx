@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import Slider from "../../components/Slider";
+import Slider from "../../components/teacherComp/SliderLogin/index.jsx";
 import { useNavigate } from "react-router-dom";
-import image from "../../assets/slider/slider.png";
+import image from "../../assets/images/slider.png";
 import { loginUser } from "../../service/userService";
-import Loading from "../../components/Loading";
+import Loading from "../../components/teacherComp/Loading";
 import { toast } from "react-toastify";
+
 // eslint-disable-next-line react/prop-types
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const arrImages = [image, image, image];
   const Navigate = useNavigate();
+
 
   const handleSubmit = async () => {
     try {

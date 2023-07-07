@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu } from 'antd';
 import controlSidebar from '/src/assets/images/controlSidebar.jpg';
-
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 function ParentSidebar() {
     const [open, setOpen] = useState(true);
 

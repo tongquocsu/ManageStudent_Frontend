@@ -12,7 +12,7 @@ const tableDate = [
     key: '1',
     STT: '1',
     nameStudent: 'Trịnh Nhã An',
-    schoolProfile: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
+    schoolProfile: <Link to="/teacher/tranScipt"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     evaluate: <Link to="/teacher/studentAssessment"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     status: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
   },
@@ -20,7 +20,7 @@ const tableDate = [
     key: '2',
     STT: '2',
     nameStudent: 'Lê Thị Thu',
-    schoolProfile: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
+    schoolProfile: <Link to="/teacher/tranScipt"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     evaluate: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     status: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
    
@@ -29,7 +29,7 @@ const tableDate = [
     key: '3',
     STT: '3',
     nameStudent: 'Trần Minh Tuấn',
-    schoolProfile: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
+    schoolProfile: <Link to="/teacher/tranScipt"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     evaluate: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     status: <Link to="/inputScore"><i className="fa-solid fa-pencil text-[#00ff00]"></i></Link>,
     
@@ -71,12 +71,11 @@ function index() {
         <Column className="text-center w-5/12" title="Họ và Tên" dataIndex="nameStudent" />
         <Column className="text-center w-2/12" title="Học bạ" dataIndex="schoolProfile" />
         <Column className="text-center w-2/12" title="Phản ánh" dataIndex="evaluate" />
-        <Column className="text-center w-2/12" title="Trạng thái" dataIndex="status" />
+        <Column className="text-center w-2/12" title="Thông tin cá nhân" dataIndex="status" />
       </Table>
       <div className="grid justify-items-start">
         <Button type="primary" onClick={handleBackData} className="bg-[#515ddd]">Quay lại</Button>
       </div>
-      
     </div>
   )
 }
