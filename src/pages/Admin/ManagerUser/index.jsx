@@ -8,15 +8,16 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Sidebar from "../../../components/Sidebar";
 import TableItem from "../../../components/TableItem";
 import ModalItem from "../../../components/ModalItem";
+import Loading from "../../../components/Loading";
 import { getAllUser } from "../../../services/User";
 
 const ManagerUser = () => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [editRecord, setEditRecord] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formValues, setFormValues] = useState({ user: { ...selectedUser } });
   const formRef = useRef(null);
-
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,21 +25,23 @@ const ManagerUser = () => {
   const [isData, setIsData] = useState(false);
 
   useEffect(() => {
-    // Initialize the data array
+    let fetchedData = false;
+    setIsLoading(true);
+
     const getAllUserData = async () => {
       const response = await getAllUser();
       setListUser(response);
-      // console.log("data: ", response);
-      console.log("listUser: ", listUser);
       setIsData(true);
+      setIsLoading(false);
     };
-    if (!isData) {
+
+    if (!fetchedData && !isData) {
+      fetchedData = true; // Đánh dấu đã lấy dữ liệu để không gọi lại getAllUserData
       getAllUserData();
     }
 
-    const initialData = [];
-    listUser.map((user) => {
-      initialData.push({
+    if (isData) {
+      const initialData = listUser.map((user) => ({
         key: user._id,
         fullname: user.name,
         gender: user.gender ?? user.gender == true ? "Nam" : "Nữ",
@@ -47,11 +50,11 @@ const ManagerUser = () => {
         phone: user.mobileNumber,
         role: user.account.role,
         address: user.address,
-      });
-    });
-    setData(initialData);
-    getAllUserData();
-  }, [isData]);
+      }));
+      setData(initialData);
+      setIsLoading(false);
+    }
+  }, [isData, listUser]);
 
   useEffect(() => {
     // Update the form values when the selectedUser changes
@@ -212,243 +215,247 @@ const ManagerUser = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="w-1/4">
-        <Sidebar />
-      </div>
-      <div className="w-3/4 mr-14">
-        <h1 className="text-gray-700 text-center mt-4">Quản lý người dùng</h1>
-        <div className="my-2 grid justify-items-end">
-          <input
-            type="text"
-            placeholder="Tìm kiếm người dùng"
-            onChange={handleSearch}
-            className="w-full py-2 px-3 rounded-md bg-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            style={{ maxWidth: "400px" }}
-          />
+    <Loading isLoading={isLoading}>
+      <div className="flex">
+        <div className="w-1/4">
+          <Sidebar />
         </div>
+        <div className="w-3/4 mr-14">
+          <h1 className="text-gray-700 text-center mt-4">Quản lý người dùng</h1>
+          <div className="my-2 grid justify-items-end">
+            <input
+              type="text"
+              placeholder="Tìm kiếm người dùng"
+              onChange={handleSearch}
+              className="w-full py-2 px-3 rounded-md bg-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ maxWidth: "400px" }}
+            />
+          </div>
 
-        <TableItem data={filteredData} columns={columns} className="mb-4" />
-        <Modal
-          title="Xóa người dùng"
-          visible={isConfirmVisible}
-          onOk={handleConfirmOk}
-          onCancel={handleConfirmCancel}
-          okText="Có"
-          okType="danger"
-          cancelText="Không"
-        >
-          <p>Bạn có chắc là muốn xóa người dùng này?</p>
-        </Modal>
-        <ModalItem
-          title="Cập nhật người dùng"
-          isOpen={isModalEdit}
-          onCancel={handleCancel}
-          editRecord={editRecord}
-          onOk={handleOk}
-          setEditRecord={setEditRecord}
-          okType="default"
-          okText="Cập nhật"
-          cancelText="Hủy"
-        >
-          <Form
-            {...layout}
-            name="nest-messages"
-            onFinish={onFinish}
-            style={{
-              maxWidth: 600,
-            }}
-            validateMessages={validateMessages}
-            initialValues={{
-              user: {
-                ...formValues.user,
-                fullname: selectedUser ? selectedUser.fullname : "",
-              },
-            }}
-            ref={formRef}
+          <TableItem data={filteredData} columns={columns} className="mb-4" />
+          <Modal
+            title="Xóa người dùng"
+            open={isConfirmVisible}
+            onOk={handleConfirmOk}
+            onCancel={handleConfirmCancel}
+            okText="Có"
+            okType="danger"
+            cancelText="Không"
           >
-            <Form.Item
-              name={["user", "fullname"]} // Update the name to match the field name
-              label="Họ và tên"
-              rules={[
-                {
-                  required: true,
-                  message: "Không được để trống!",
+            <p>Bạn có chắc là muốn xóa người dùng này?</p>
+          </Modal>
+          <ModalItem
+            title="Cập nhật người dùng"
+            isOpen={isModalEdit}
+            onCancel={handleCancel}
+            editRecord={editRecord}
+            onOk={handleOk}
+            setEditRecord={setEditRecord}
+            okType="default"
+            okText="Cập nhật"
+            cancelText="Hủy"
+          >
+            <Form
+              {...layout}
+              name="nest-messages"
+              onFinish={onFinish}
+              style={{
+                maxWidth: 600,
+              }}
+              validateMessages={validateMessages}
+              initialValues={{
+                user: {
+                  ...formValues.user,
+                  fullname: selectedUser ? selectedUser.fullname : "",
                 },
-              ]}
+              }}
+              ref={formRef}
             >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      fullname: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-            <Form.Item
-              name={["user", "gender"]} // Update the name to match the field name
-              label="Giới tính"
-              rules={[
-                {
-                  required: true,
-                  message: "Không được để trống!",
-                },
-              ]}
-            >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      gender: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-            <Form.Item
-              name={["user", "dateOfBirth"]} // Update the name to match the field name
-              label="Năm sinh"
-              rules={[
-                {
-                  required: true,
-                  message: "Không được để trống!",
-                },
-              ]}
-            >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      dateOfBirth: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name={["user", "email"]}
-              label="Email"
-              rules={[
-                {
-                  type: "email",
-                  required: true,
-                },
-              ]}
-            >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      email: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-            <Form.Item
-              name={["user", "phone"]} // Update the name to match the field name
-              label="Số điện thoại"
-              rules={[
-                {
-                  required: true,
-                  message: "Không được để trống!",
-                },
-              ]}
-            >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      fullname: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-            <Form.Item
-              name={["user", "role"]}
-              label="Vai trò"
-              rules={[
-                {
-                  type: "role",
-                  required: true,
-                },
-              ]}
-            >
-              <Select
-                onChange={(value) => {
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      role: value,
-                    },
-                  }));
-                }}
+              <Form.Item
+                name={["user", "fullname"]} // Update the name to match the field name
+                label="Họ và tên"
+                rules={[
+                  {
+                    required: true,
+                    message: "Không được để trống!",
+                  },
+                ]}
               >
-                <Option value={listUser.account?.role == "student"}>
-                  Học sinh
-                </Option>
-                <Option value={listUser.account?.role == "admin"}>Admin</Option>
-                <Option value={listUser.account?.role == "teacher"}>
-                  Giáo viên
-                </Option>
-                <Option value={listUser.account?.role == "accountant"}>
-                  Kế toán
-                </Option>
-                <Option value={listUser.account?.role == "parent"}>
-                  Phụ huynh
-                </Option>
-                <Option value={listUser.account?.role == "schoolAdmin"}>
-                  Quản lý học vụ
-                </Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name={["user", "address"]} // Update the name to match the field name
-              label="Địa chỉ"
-              rules={[
-                {
-                  required: true,
-                  message: "Không được để trống!",
-                },
-              ]}
-            >
-              <Input
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormValues((prevValues) => ({
-                    ...prevValues,
-                    user: {
-                      ...prevValues.user,
-                      fullname: value,
-                    },
-                  }));
-                }}
-              />
-            </Form.Item>
-          </Form>
-        </ModalItem>
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        fullname: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                name={["user", "gender"]} // Update the name to match the field name
+                label="Giới tính"
+                rules={[
+                  {
+                    required: true,
+                    message: "Không được để trống!",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        gender: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                name={["user", "dateOfBirth"]} // Update the name to match the field name
+                label="Năm sinh"
+                rules={[
+                  {
+                    required: true,
+                    message: "Không được để trống!",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        dateOfBirth: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                name={["user", "email"]}
+                label="Email"
+                rules={[
+                  {
+                    type: "email",
+                    required: true,
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        email: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                name={["user", "phone"]} // Update the name to match the field name
+                label="Số điện thoại"
+                rules={[
+                  {
+                    required: true,
+                    message: "Không được để trống!",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        fullname: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                name={["user", "role"]}
+                label="Vai trò"
+                rules={[
+                  {
+                    type: "role",
+                    required: true,
+                  },
+                ]}
+              >
+                <Select
+                  onChange={(value) => {
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        role: value,
+                      },
+                    }));
+                  }}
+                >
+                  <Option value={listUser.account?.role == "student"}>
+                    Học sinh
+                  </Option>
+                  <Option value={listUser.account?.role == "admin"}>
+                    Admin
+                  </Option>
+                  <Option value={listUser.account?.role == "teacher"}>
+                    Giáo viên
+                  </Option>
+                  <Option value={listUser.account?.role == "accountant"}>
+                    Kế toán
+                  </Option>
+                  <Option value={listUser.account?.role == "parent"}>
+                    Phụ huynh
+                  </Option>
+                  <Option value={listUser.account?.role == "schoolAdmin"}>
+                    Quản lý học vụ
+                  </Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name={["user", "address"]} // Update the name to match the field name
+                label="Địa chỉ"
+                rules={[
+                  {
+                    required: true,
+                    message: "Không được để trống!",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      user: {
+                        ...prevValues.user,
+                        fullname: value,
+                      },
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Form>
+          </ModalItem>
+        </div>
       </div>
-    </div>
+    </Loading>
   );
 };
 
