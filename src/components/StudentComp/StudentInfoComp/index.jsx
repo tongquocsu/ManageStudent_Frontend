@@ -1,12 +1,11 @@
-import { Button, Form } from 'antd';
+import { Button } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import UpdateParentComp from '../UpdateParentComp'
+import UpdateStudentComp from '../UpdateStudentComp';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
-import { Fragment } from 'react';
-
-function ParentInfoComp(){
+ 
+function StudentInfoComp(){
     const [modal, setModal] = useState(false);
 
     const toggle = () => setModal(!modal);
@@ -15,43 +14,30 @@ function ParentInfoComp(){
         "Họ và tên",
         "Ngày sinh",
         "Số điện thoại",
-        // "Email",
         "Địa chỉ",
     ]);
-
-    const id = useParams();
-    const [getParent, setGetParent] = useState([{}])
-    const [account, getAccount] = useState([])
     
+    // const [form] = Form.useForm();
+
+    // const normFile = (e) => {
+    //     console.log('Upload event:', e);
+    //     if (Array.isArray(e)) {
+    //     return e;
+    //     }
+    //     return e?.fileList;
+    // };
+    const id = useParams();
+
+    const [student, setStudent] = useState([{}])
+
     useEffect(() => {
-        axios.get('http://localhost:3002/api/v1/parent/detail/'+id.pid)
+        axios.get('http://localhost:3002/api/v1/student/detail/'+id.pid)
         .then(
             res => {
-                setGetParent(res.data)
+                setStudent(res.data)
             }
         ).catch(err => console.log(err))
     }, [])
-
-    let idAcc;
-
-    const getId = (idAccount) => {
-        idAcc = idAccount;
-    } 
-    
-    useEffect(() => {
-        axios.get('http://localhost:3002/api/v1/auth/account/account-list')
-        .then(
-            res => {
-                for(let i = 0; i < res.data.length; i++){
-                    if(res.data[i]._id == idAcc){
-                      getAccount(res.data[i])
-                    }
-                }
-            }
-        )
-        .catch(err => console.log(err))
-    }, [])
-
     return (
         <>
             <h2 className="m-4 text-center text-base font-bold">Thông tin tài khoản</h2>
@@ -79,25 +65,21 @@ function ParentInfoComp(){
                             })}
                             </thead>
                             <tbody className="pl-3">
-                            {(typeof getParent.parent === 'undefined') ? (
+                            {(typeof student.student === 'undefined') ? (
                                     <p>Loading...</p>
                                 ): (
                                     <div>
-                                        <tr key={getParent._id}>
-                                            <td>{getParent.parent.person.name}</td>
+                                        <tr key={student._id}>
+                                            <td>{student.student.person.name}</td>
                                         </tr>
-                                        <tr key={getParent._id}>
-                                            <td>{getParent.parent.person.dateOfBirth}</td>
+                                        <tr key={student._id}>
+                                            <td>{student.student.person.dateOfBirth}</td>
                                         </tr>
-                                        <tr key={getParent._id}>
-                                            <td>{getParent.parent.person.mobileNumber}</td>
+                                        <tr key={student._id}>
+                                            <td>{student.student.person.mobileNumber}</td>
                                         </tr>
-                                        {/* <tr key={getParent._id}>
-                                            <Fragment>{getId(getParent.parent.person.account)}</Fragment>
-                                            <td>{account.email}</td>
-                                        </tr> */}
-                                        <tr key={getParent._id}>
-                                            <td>{getParent.parent.person.address}</td>
+                                        <tr key={student._id}>
+                                            <td>{student.student.person.address}</td>
                                         </tr>
                                     </div>
                                 )
@@ -114,11 +96,11 @@ function ParentInfoComp(){
                 </div>
                 
                 <Modal isOpen={modal} toggle={toggle} >
-                    <UpdateParentComp />
+                    <UpdateStudentComp />
                 </Modal>
             </div>
         </>
     );
 }
-// export default withRouter(ParentInfoComp);
-export default ParentInfoComp;
+
+export default StudentInfoComp;

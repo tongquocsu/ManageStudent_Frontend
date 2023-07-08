@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { handleLoginRedux } from "../../redux/action/userAction";
 import axios from "axios";
 import { fetchAllParent } from "../../service/parentService";
+import { fetchAllStudent } from "../../service/studentService";
 
 // eslint-disable-next-line react/prop-types
 function Login() {
@@ -19,8 +20,8 @@ function Login() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   
-  //Get id
-  const [value, setValue] = useState([{}])
+  //Get parent & student id
+  const [parent, setParent] = useState([{}])
   
   useEffect(() => {
     getParent();
@@ -29,11 +30,22 @@ function Login() {
   const getParent = async () => {
     let res = await fetchAllParent();
     if(res && res.data && res.data.parents){
-      setValue(res.data.parents)
+      setParent(res.data.parents)
     }
   }
-  // console.log(value[0]);
-  // console.log(value.length);
+
+  const [student, setStudent] = useState([{}])
+
+  useEffect(() => {
+    getStudent();
+  }, [])
+
+  const getStudent = async () => {
+    let res = await fetchAllStudent();
+    if(res && res.data && res.data.students){
+      setStudent(res.data.students)
+    }
+  }
   
   const handleSubmit = async () => {
     try {
@@ -48,12 +60,17 @@ function Login() {
       } else if (role === "") {
         Navigate("/manager-accoutant");
       }else if (role === "parent") {
-        for(let i = 0; i < value.length; i++){
-          if(value[i].person.account == dataAccount.accountId){
-            Navigate("/parent/parent-info/"+value[i]._id);
+        for(let i = 0; i < parent.length; i++){
+          if(parent[i].person.account == dataAccount.accountId){
+            Navigate("/parent/parent-info/"+parent[i]._id);
           }
         }
-        // console.log(dataAccount.accountId)
+      }else if (role === "student") {
+        for(let i = 0; i < student.length; i++){
+          if(student[i].person.account == dataAccount.accountId){
+            Navigate("/student/student-info/"+student[i]._id);
+          }
+        }
       }
     } catch (err) {
       setIsLoading(false);

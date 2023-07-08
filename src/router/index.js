@@ -6,6 +6,8 @@ import Transcript from "../pages/Parent/Transcript";
 import ParentMeeting from "../pages/Parent/ParentMeeting";
 import Login from "../pages/Login/Login";
 
+import StudentInfo from "../pages/Student/StudentInfo";
+
 const routes = [
     { path: "/login", page: Login, isShowHeader: false, },
     { path: "/parent/infringement", page: Infringement, isShowHeader: true, },
@@ -14,6 +16,9 @@ const routes = [
     { path: "/parent/parent-info/:pid", page: ParentInfo, isShowHeader: true, },
     { path: "/parent/transcript", page: Transcript, isShowHeader: true, },
     { path: "/parent/meeting", page: ParentMeeting, isShowHeader: true, },
+
+    { path: "/student/student-info/:pid", page: StudentInfo, isShowHeader: true, },
+
 ];
 
 export default routes;
