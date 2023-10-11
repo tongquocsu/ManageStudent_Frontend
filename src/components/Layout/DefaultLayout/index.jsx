@@ -16,7 +16,7 @@ function index({children}){
                 <div className="flex-1 ml-3 mr-3 grid justify-items-center">{children}</div>
             </div>
         </div>)
-    }
+    }    
 }
 export default index
 

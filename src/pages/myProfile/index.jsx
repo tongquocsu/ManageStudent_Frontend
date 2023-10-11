@@ -9,7 +9,6 @@ function index() {
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-
   const [getTeacher, setTeacher] = useState([{}]);
   useEffect(() => {
     fetch(
@@ -20,6 +19,7 @@ function index() {
         setTeacher(data);
       });
   }, []);
+  console.log(getTeacher._id)
   return (
     <div>
       <h2 className="my-3 text-center font-bold font-sm text-[#515ddd]">

@@ -1,13 +1,24 @@
 import { NotificationOutlined, DownOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Dropdown, Space } from "antd";
-// import { Button, NavDropdown, Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-
-// import Nav from "react-bootstrap/Nav";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
+import env from '/env.json';
+import axios from "axios";
+
+// import Nav from "react-bootstrap/Nav";
+// import { Button, NavDropdown, Form } from "react-bootstrap";
+// useEffect(() => {
+//   axios.get(`${env.api}/`)
+// })
 
 function Header() {
+
+  var accessTokenObj = JSON.parse(localStorage.getItem("access_token"));
+  console.log(accessTokenObj);
+
   const items = [
    
   ];

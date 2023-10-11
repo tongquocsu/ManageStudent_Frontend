@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../service/userService";
 import * as Type from "../Type/userType";
-import { toast } from "react-toastify";
 
 export const handleLoginRedux = (email, password) => {
   return async (dispatch, getState) => {
@@ -13,7 +10,7 @@ export const handleLoginRedux = (email, password) => {
       if (res && res.token) {
         dispatch({
           type: Type.LOGIN_USER_SUCCESS,
-          data: res.account,
+          data: res,
         });
         localStorage.setItem("access_token", res.token);
         return res.account;

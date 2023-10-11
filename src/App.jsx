@@ -3,9 +3,10 @@ import { publicRoutes } from './routes';
 import DefaultLayout  from './components/Layout/DefaultLayout';
 import './assets/sass/css/style.css';
 
+
 function App() {
-  return (
     <Router>
+  return (	
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
@@ -20,7 +21,6 @@ function App() {
         </Routes>
       </div>
     </Router>
-  );
 }
 
 

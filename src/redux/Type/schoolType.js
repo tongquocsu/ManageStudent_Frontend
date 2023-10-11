@@ -1,0 +1,3 @@
+export const SCHOOL_FETCH = "SCHOOL_FETCH";
+export const SCHOOL_SUCCESS = "SCHOOL_SUCCESS";
+export const SCHOOL_ERROR = "SCHOOL_ERROR";

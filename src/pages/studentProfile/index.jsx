@@ -3,7 +3,7 @@ function index() {
         <div className="m-6">
             <div>
                 <div className="px-4 sm:px-0">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900 text-center">Thông tin học sinh</h2>
+                    <h2 className="text-base font-semibold leading-7 text-gray-900 text-center">TMy profile</h2>
                 </div>
                 <div className="mt-6">
                     <dl className="divide-y divide-gray-100">
@@ -11,7 +11,7 @@ function index() {
                         <dt className="text-sm font-medium leading-6 text-gray-900">Họ và tên</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Nguyễn Văn A</dd>
                     </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-6 sm: grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Phụ huynh của học sinh</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Nguyễn Thị Hà</dd>
                     </div>
